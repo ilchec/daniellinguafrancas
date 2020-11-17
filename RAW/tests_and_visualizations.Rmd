@@ -1,0 +1,1220 @@
+---
+title: 'Supplement to the paper "Lingua Francas as Lexical Donors: Evidence from Daghestan"'
+author: Michael Daniel, Ilia Chechuro, Samira Verhees, Nina Dobrushina
+bibliography: "bibliography.bib"
+nocite: '@*'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+This page is organized as follows. 
+
+In Part 1, we create the multilingualism plots based on Multidagestan data (Dobrushina et al. 2017). In Part 2, we use the loanword data and calculate the numbers of sharings between the East-Caucasian wordlists and donor languages. We use regression analysis and a series of t-tests to test our claims for statistical significance. Part 3 runs permutation tests. To conduct the permutation tests, create a new sample of wordlists based on our data but with pan-Daghestanian probabilities of attesting particular lexemes in the lists and test our real data against this gainst this sample. The premutation block consists of two parts: Avar and Azerbaijani influence vs. Chechen and Georgian influence, the two parts are more or less the same, apart from the data sampling, this is why the second part is commented in less detail.
+
+The plots in this supplement appear in the order they are created, which differs from the order in the paper. This decision was made to increase the readability of the code. For convenience, the figures here are provided with their numbers in the paper.
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+# Loading the packages
+library(tidyverse)
+library(ggplot2)
+library(ggrepel)
+library(dplyr)
+library(ggpubr)
+library(sjPlot)
+library(arm)
+library(blme)
+library(rstatix)
+library(rcompanion)
+library(ggpattern)
+
+'%nin%' <- Negate('%in%')
+'%+=%' <- function(e1,e2) eval.parent(substitute(e1 <- e1 + e2))
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#The function *preproc_data* reads the data file.
+
+preproc_data <- function(data_file) {
+  data <- as.data.frame(read_tsv(data_file))
+  data <- data %>% mutate(entry_id = row_number())
+  data <- data[which(data$Stem != "NA"),]
+  data <- distinct(data)
+  return(data)
+}
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#The function *fake_counts* counts the percentages of loans in permuted dataset.
+fake_counts <- function(fake_loans, real_loans, source) {
+  fake_loans %>% group_by(District, Code, Iter, Code_Iter) %>% distinct(Code_Iter, `Concept nr.`) %>% dplyr::count() -> fake_counts
+  fake_counts <- right_join(fake_counts, speakers, by = c("Code", "Iter", "Code_Iter"))
+  colnames(fake_counts)[5] <- paste(source, "_Loans", sep = "")
+  fake_counts <- left_join(fake_counts, counts_real[names(counts_real) %in% c("Code", paste(source, "_Loans", sep = ""))], by = "Code")
+  colnames(fake_counts)[c(length(fake_counts), length(fake_counts) - 1)] <- c("Loans_Real", "Loans_Fake")
+  fake_counts <- as.data.frame(fake_counts)
+  fake_counts[is.na(fake_counts)] <- 0
+  fake_counts <- left_join(fake_counts, List_sizes[,c(4,5)], by = "Code")
+  fake_counts$Real_Percentage <- fake_counts$Loans_Real/fake_counts$List_Size
+  fake_counts$Fake_Percentage <- fake_counts$Loans_Fake/fake_counts$List_Size
+  return(fake_counts)
+} 
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#The function *fake_means* calculates the means for permuted data.
+fake_means <- function(fake_counts) {
+  fake_counts %>% group_by(Iter, District) %>% mutate(Fake_Mean = mean(Fake_Percentage)) -> fake_counts
+  fake_counts %>% group_by(Iter, District) %>% mutate(Real_Mean = mean(Real_Percentage)) -> fake_counts
+  fake_counts$Delta <- fake_counts$Real_Mean - fake_counts$Fake_Mean
+  fake_means <- fake_counts[!duplicated(fake_counts[names(fake_counts) %in% c("Iter", "District")]),]
+  return(fake_means)
+}
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#The function *makeplot* plots the results of the permutation test.
+
+makeplot <- function(data, source) {
+  p <- ggplot(data, aes(x = Delta)) + 
+  geom_density(adjust = 5)+
+  #geom_histogram(aes(y = ..density..), alpha = 0.2, bins = 10)+
+  geom_vline(xintercept = 0)+
+  ggtitle(paste("Borrowings from", source))+
+  theme_bw()+
+  labs(x = "", y = "")+
+  theme(text = element_text(size=15))+
+  theme(plot.title = element_text(size = 30, face = "bold"))+
+  xlim(-0.15, 0.15)+
+  facet_wrap(~ District, 
+             labeller = labeller(District = D_percentages))
+  return(p)
+}
+```
+
+## 1. Multilingualism
+
+#### Fig. 3 in the paper:
+
+In Fig. 3, the plots show bilingualism rates for speakers of the local languages with each of Turkic, Avar, Georgian and Chechen. The data are again split by the three areas. Dots represent villages, with a horizontal line showing the median value per district. The Y axis shows the percentage of people born before 1919 bilingual in the respective language.
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#Reading the multilingualism data
+ml <- read_tsv("Multilingualism_data.tsv")
+#Converting to the narrow format
+ml[,-1] %>% 
+  gather(key = Language, value = Does_speak, -c(Village, Language,	Admin_center,	District)) -> ml 
+
+#This part is needed to make sure that no data are lost in the transformations
+districts <- distinct(ml, Village, District)
+villages <- distinct(ml, Village, Language, Does_speak, District)
+villages <- villages[!is.na(villages$Does_speak),]
+villages <- tidyr::expand(villages, Village, Language, Does_speak)
+villages <- left_join(villages, districts, by = c("Village"))
+
+#Counting speakers of L2's
+ml %>% 
+  group_by(Village, Language) %>% 
+  dplyr::count(Does_speak) -> ml
+
+#Removing NA's
+ml <- ml[!is.na(ml$Does_speak),]
+
+#Adding total counts of non-NA observations
+ml %>% 
+  group_by(Village, Language) %>% 
+  mutate(total = sum(n)) -> ml
+
+#Adding percentages
+ml$Percentage <- ml$n*100/ml$total
+
+#Adding villages that were lost in the process
+ml <- left_join(villages, ml, by = c("Village", "Language", "Does_speak"))
+
+#In the lost villages, the couns for some languages were zero, so assigning zero values
+ml$Percentage[is.na(ml$Percentage)] <- 0
+
+#Leaving only proportion of speakers (cleanup)
+ml <- ml[ml$Does_speak == 1,]
+
+#Plotting
+ml %>% 
+  ggplot(aes(x = District, y = Percentage, label = Village)) +
+  geom_jitter(size = 4, position = position_jitter(width = 0.1, height = 0.01), show.legend = TRUE, color = "black", aplha = 0.9) +
+  labs(title = "", x = "District", y = "Percentage of L2 Speakers")+
+  scale_colour_grey()+
+  theme_bw()+
+  theme(text = element_text(size=30))+
+  facet_wrap(. ~ factor(Language, levels = c("Turkic", "Avar", "Georgian", "Chechen"))) -> p_Fig3
+ggsave("Figures/Fig3.svg", p_Fig3, width = 20, height = 10)
+ggsave("Figures/Fig3.png", p_Fig3, width = 20, height = 10)
+
+p_Fig3
+```
+
+#### The dataset for Fig. 4b in the paper:
+
+The dataset below contains the percentages of speakers of each L2 in the three regions.
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ml <- ml[which(names(ml) %in% c("Village", "Language", "District", "Percentage"))]
+ml_wide <- spread(ml, Language, Percentage)
+ml_wide %>% DT::datatable(class = 'cell-border stripe', 
+          filter = 'top',
+          extensions = 'Buttons', 
+          options = list(
+            scrollX = TRUE,
+            order = list(2, 'asc'),
+            autoWidth = TRUE,
+            columnDefs = list(list(width = '50px', targets = c(1, 5))),
+            pageLength = 10,
+            dom = 'lBfrtip',
+            buttons = c('copy', 'csv'))) -> d_view
+
+d_view
+```
+
+#### Fig. 4b in the paper:
+
+The scatter plot in Fig. 4b shows bilingualism rates in Avar and Turkic (Azerbaijani in the South and Kumyk in the North). The dots represent villages. In both cases, Avar is shown on the X axis, and Turkic is shown on the Y axis. Both charts show a very clear divide between the South, the domain of Azerbaijani, and the North, the Avar fiefdom.
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ml_wide %>% 
+  ggplot(aes(x = Turkic, y = Avar, label = Village)) +
+  geom_text_repel(size = 10, position = position_jitter(width = 0.1, height = 0.01), show.legend = TRUE, color = "black", aplha = 0.9) +
+  labs(title = "", x = "Percentage of Turkic Speakers", y = "Percentage of Avar Speakers")+
+  scale_colour_grey()+
+  theme_bw()+
+  geom_abline(intercept = 0.01, slope = 1, linetype = "dashed", color = "black", size = 2)+
+  annotate(geom = "text", x = 50, y = 80, label = "North", color = "Black", size = 20)+
+  annotate(geom = "text", x = 80, y = 50, label = "South", color = "Black", size = 20)+
+  theme(text = element_text(size=30)) -> p_Fig4b
+ggsave("Figures/Fig4b.svg", p_Fig4b, width = 20, height = 10)
+ggsave("Figures/Fig4b.png", p_Fig4b, width = 20, height = 10)
+
+p_Fig4b
+```
+
+## 2. Descriptive statistics, real observations only 
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+### 2.1. Reading the data
+
+#First, we read the data and combine it with metadata. We also filter out the data that are not used in the current study (e.g. female respondents, other regions, low quality wordlists).
+
+meta <- as.data.frame(read_tsv("meta_anonymized.tsv"))
+words <- as.data.frame(preproc_data("words_data.tsv"))
+words_meta <- left_join(meta, words, by = "Code")
+words_meta$Set <- paste(words_meta$`Concept nr.`, words_meta$Stem, sep = " - ")
+cognates <- words_meta[names(words_meta) %in% c("entry_id", "cognate", "Language", "Set")]
+cognates <- cognates[!is.na(cognates$cognate),]
+words_meta <- words_meta[-which(names(words_meta) %in% c("cognate"))]
+words_meta <- words_meta[which(words_meta$Language_Paper == 1),]
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 2.2. List Sizes
+
+#Counting list sizes, we'll need it for calculating percentages later. The list size is the number of successfully collected concepts, i.e. it varies between 1 and 160. If there is more than one word per concept collected, it is still counted as a single concept.
+
+words_meta %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> List_sizes
+colnames(List_sizes)[5] <- "List_Size"
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+### 2.3. Subsetting the similarity sets corresponding to loanwords
+
+#Here we subset the Turkic, Avar, Georgian and Chechen similarity sets so that we can compare East-Caucasian wordlists to them.
+
+#The loanwords are counted as follows. 
+
+#- Turkic loans are the words attested in Turkic and not in Avar, Chechen or Georgian. 
+#- Avar loans are the words attested in Avar and not in Turkic, Chechen, Georgian or in the Avar cognate list. 
+#- Georgian loans are the words attested in Georgian and not in Turkic, Avar or Chechen. 
+#- Chechen loans are the words attested in Chechen and not in Turkic, Avar or Georgian. 
+
+#By counting the loanwords this way, we make sure that all the words that may, however improbably, be mediated, are not counted and the signal that we are dealing with only indicates one direction of lexical convergence (e.g. *immediately with Turkic* and not *with Turkic, possibly via Avar*). The second type of convergence had to be eliminated since it bears two contradicting signals that cannot be distinguished: ultimately Turkic loans borrowed from Avar are the result of convergence with Avar and not with Turkic. We are aware that not all words attested in both Avar and Turkic are mediated, but to remain on the safe side we remove them all and make sure that the signal is still there. Note that in the permuted data the counts work the same way.
+
+Turkic <- distinct(words_meta[words_meta$Language %in% c("Azerbaijani", "Kumyk"),])
+Turkic_incl_mediated <- Turkic
+Georgian <- distinct(words_meta[words_meta$Language %in% c("Georgian"),])
+Georgian_incl_mediated <- Georgian
+Avar <- distinct(words_meta[words_meta$Language %in% c("Avar"),])
+Avar_incl_mediated <- Avar
+Chechen <- distinct(words_meta[words_meta$Language %in% c("Chechen"),])
+Chechen_incl_mediated <- Chechen
+Akhty_incl_mediated <- distinct(words_meta[words_meta$Language %in% c("Lezgian") & words_meta$Village %in% c("Akhty", "Khlyut", "Fiy", "Gdym"),])
+Lezgian_incl_mediated <- distinct(words_meta[words_meta$Language %in% c("Lezgian") & words_meta$Code == "D_Lezgian",])
+Lezgian_Akhty_incl_mediated <- distinct(words_meta[words_meta$Language %in% c("Lezgian"),])
+
+Turkic_clean <- Turkic[Turkic$Set %nin% c(Georgian$Set, Avar$Set, Chechen$Set),]
+Avar_clean <- Avar[Avar$Set %nin% c(Georgian$Set, Turkic$Set, Chechen$Set),]
+Georgian_clean <- Georgian[Georgian$Set %nin% c(Turkic$Set, Avar$Set, Chechen$Set),]
+Chechen_clean <- Chechen[Chechen$Set %nin% c(Georgian$Set, Avar$Set, Turkic$Set),]
+Turkic <- Turkic_clean
+Georgian <- Georgian_clean
+Avar <- Avar_clean
+Chechen <- Chechen_clean
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 2.4. Subsetting the data
+
+#This code chunk only leaves the relevant sets (i.e. the ones corresponding to loanwords) in the East-Caucasian data set.
+
+Turkic_loans <- as.data.frame(words_meta[words_meta$Set %in% Turkic$Set,])
+Avar_loans <- as.data.frame(words_meta[words_meta$Set %in% Avar$Set,])
+Georgian_loans <- as.data.frame(words_meta[words_meta$Set %in% Georgian$Set,])
+Chechen_loans <- as.data.frame(words_meta[words_meta$Set %in% Chechen$Set,])
+
+Turkic_loans_incl_mediated <- as.data.frame(words_meta[words_meta$Set %in% Turkic_incl_mediated$Set,])
+Avar_loans_incl_mediated <- as.data.frame(words_meta[words_meta$Set %in% Avar_incl_mediated$Set,])
+Georgian_loans_incl_mediated <- as.data.frame(words_meta[words_meta$Set %in% Georgian_incl_mediated$Set,])
+Chechen_loans_incl_mediated <- as.data.frame(words_meta[words_meta$Set %in% Chechen_incl_mediated$Set,])
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 2.5. Specifying the external loans; Counting the relevant ones
+
+#Now, the loans that are irrelevant for the study have to be specified and removed because they may confound the signal we're interested in. These are the words possibly borrowed from Russian, Arabic and Persian in all languages and Avar *cognates* (NB! not Avar *loans*) in the languages of the Northern part of Daghestan. 
+
+to_remove <- words_meta[which(words_meta$Code %in% c("E_Russian", "E_Arabic", "E_Persian")),]
+
+Turkic_loans <- Turkic_loans[which(Turkic_loans$Set %nin% to_remove$Set),]
+Turkic_loans %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`)%>% dplyr::count() -> Turkic_loans_counts
+colnames(Turkic_loans_counts)[5] <- "Turkic_Loans"
+
+Avar_loans <- Avar_loans[which(Avar_loans$Set %nin% to_remove$Set),]
+Avar_loans <- Avar_loans[which(Avar_loans$entry_id %nin% cognates$entry_id),]
+Avar_loans %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Avar_loans_counts
+colnames(Avar_loans_counts)[5] <- "Avar_Loans"
+
+Georgian_loans <- Georgian_loans[which(Georgian_loans$Set %nin% to_remove$Set),]
+Georgian_loans %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Georgian_loans_counts
+colnames(Georgian_loans_counts)[5] <- "Georgian_Loans"
+
+Chechen_loans <- Chechen_loans[which(Chechen_loans$Set %nin% to_remove$Set),]
+Chechen_loans %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Chechen_loans_counts
+colnames(Chechen_loans_counts)[5] <- "Chechen_Loans"
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#We also count the loans without removing the possible mediated ones. 
+
+to_remove <- words_meta[which(words_meta$Code %in% c("E_Russian", "E_Arabic", "E_Persian")),]
+
+Turkic_loans_incl_mediated <- Turkic_loans_incl_mediated[which(Turkic_loans_incl_mediated$Set %nin% to_remove$Set),]
+Turkic_loans_incl_mediated %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Turkic_loans_incl_mediated_counts
+colnames(Turkic_loans_incl_mediated_counts)[5] <- "Turkic_loans_incl_mediated"
+
+Avar_loans_incl_mediated <- Avar_loans_incl_mediated[which(Avar_loans_incl_mediated$Set %nin% to_remove$Set),]
+Avar_loans_incl_mediated <- Avar_loans_incl_mediated[which(Avar_loans_incl_mediated$entry_id %nin% cognates$entry_id),]
+Avar_loans_incl_mediated %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Avar_loans_incl_mediated_counts
+colnames(Avar_loans_incl_mediated_counts)[5] <- "Avar_loans_incl_mediated"
+
+Georgian_loans_incl_mediated <- Georgian_loans_incl_mediated[which(Georgian_loans_incl_mediated$Set %nin% to_remove$Set),]
+Georgian_loans_incl_mediated %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Georgian_loans_incl_mediated_counts
+colnames(Georgian_loans_incl_mediated_counts)[5] <- "Georgian_loans_incl_mediated"
+
+Chechen_loans_incl_mediated <- Chechen_loans_incl_mediated[which(Chechen_loans_incl_mediated$Set %nin% to_remove$Set),]
+Chechen_loans_incl_mediated %>% group_by(Language, District, Village, Code) %>% distinct(Code, `Concept nr.`) %>% dplyr::count() -> Chechen_loans_incl_mediated_counts
+colnames(Chechen_loans_incl_mediated_counts)[5] <- "Chechen_loans_incl_mediated"
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 2.6. Creating a dataset for plotting
+
+#Here we join the loanword counts per source into a single dataset. Note that even if not all speakers have loans from each of the sources, all of them have loans from at least one source. This is why using *full_join* will let us preserve all the speakers. We also add the list sizes to the data set. We do it, first, because we use them to calculate proportions and, second, to make sure that no data are lost in case we have a theoretical speaker with 0 loans from all four sources.
+
+#Since the *count* function cannot yield *0* values and yields *NA* instead, we substitute all *NA*'s with *0*.
+
+counts_real <- full_join(
+    Turkic_loans_counts,
+    Avar_loans_counts, by = "Code")
+counts_real <- full_join(
+    counts_real,
+    Georgian_loans_counts, by = "Code")
+counts_real <- full_join(
+    counts_real,
+    Chechen_loans_counts, by = "Code")
+counts_real <- full_join(
+    List_sizes, counts_real, by = "Code")
+
+counts_real <- counts_real[,-c(6,7,8,10,11,12,14,15,16,18,19,20)]
+counts_real[is.na(counts_real)] <- 0
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#The same for counts including mediated loans. 
+
+counts_real_incl_mediated <- full_join(
+    Turkic_loans_incl_mediated_counts,
+    Avar_loans_incl_mediated_counts, by = "Code")
+counts_real_incl_mediated <- full_join(
+    counts_real_incl_mediated,
+    Georgian_loans_incl_mediated_counts, by = "Code")
+counts_real_incl_mediated <- full_join(
+    counts_real_incl_mediated,
+    Chechen_loans_incl_mediated_counts, by = "Code")
+counts_real_incl_mediated <- full_join(
+    List_sizes, counts_real_incl_mediated, by = "Code")
+
+counts_real_incl_mediated <- counts_real_incl_mediated[,-c(6,7,8,10,11,12,14,15,16,18,19,20)]
+counts_real_incl_mediated[is.na(counts_real_incl_mediated)] <- 0
+```
+
+In Fig. 2a and b, the four plots show lexical influence from Turkic, Avar, Georgian and Chechen. The data are split by the three areas on the X axis. The Y axis shows the percentage of the loanwords found in the elicitations. Dots represent elicitations, with a horizontal line showing the median value per district. Fig. 2a and 2b are different in that the former shows the percentage of the total number of loanwords from the respective donor, including loanwords this donor shares with other donors. We thus cannot be a priori sure which language they come from. Fig. 2b only shows the percentage of ‘unshared’ loanwords which are only attested in this donor but not in the other donors. The disadvantage of this way of counting is that it may underestimate the amount of lexical borrowing from the relevant donor. In Fig. 2b, all figures drop, but they do so most conspicuously in the case of Turkic influence in the North, the fact we come back to in the end of this section. For now, we may interpret the counts in Fig. 2a and the counts in Fig. 2b as upper (liberal) and lower (conservative) estimates, and trust that the true values lie somewhere between them.
+
+#### The dataset for Fig. 2a in the paper:
+
+The dataset below contains the percentages of loans from each L2 in the three regions.
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#Loan counts with no account for mediation:
+
+d <- counts_real_incl_mediated[which(counts_real_incl_mediated$District %in% c("Rutul", "Tsunta", "Botlikh", "Akhvakh", "Akhty")),]
+d$Turkic_proportion <- d$Turkic_loans_incl_mediated/d$List_Size
+d$Avar_proportion <- d$Avar_loans_incl_mediated/d$List_Size
+d$Georgian_proportion <- d$Georgian_loans_incl_mediated/d$List_Size
+d$Chechen_proportion <- d$Chechen_loans_incl_mediated/d$List_Size
+d$District[which(d$District %in% c("Rutul", "Akhty"))] <- "South"
+d$District[which(d$District %in% c("Botlikh", "Akhvakh"))] <- "Northeast"
+d$District[which(d$District %in% c("Tsunta"))] <- "Northwest"
+
+d %>% DT::datatable(class = 'cell-border stripe', 
+          filter = 'top',
+          extensions = 'Buttons', 
+          options = list(
+            scrollX = TRUE,
+            order = list(2, 'asc'),
+            autoWidth = TRUE,
+            columnDefs = list(list(width = '50px', targets = c(1, 5))),
+            pageLength = 10,
+            dom = 'lBfrtip',
+            buttons = c('copy', 'csv'))) -> d_view
+d_view
+```
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#Plotting the numbers of loans:
+
+d_gathered <- gather(d[,c(1:4, 10:13)], Source, Proportion, -c(Language, District, Village, Code))
+d_gathered$Source %>%
+  stringr::str_replace("_proportion", " Loans") %>% 
+  factor(levels = c("Turkic Loans", "Avar Loans", "Georgian Loans", "Chechen Loans")) -> d_gathered$Source
+d_gathered_incl_mediation <- d_gathered
+d_gathered_incl_mediation$Type <- rep("Total loanwords", nrow(d_gathered_incl_mediation))
+d_gathered$Percentage <- d_gathered$Proportion*100
+p_Fig2a <- ggplot(data = d_gathered, aes(x = District, y = Percentage)) +
+  geom_jitter(size = 3, position = position_jitter(width = 0.1, height = 0.0), show.legend = TRUE, color = "black", aplha = 0.8) +
+  stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5)+
+  stat_summary(fun.y=median, geom="label", aes(label=sprintf("%1.1f", ..y..)), 
+               size=8, show.legend=FALSE, color = "black", alpha = 0.6, position=position_nudge(x = -0.4, y = 0))+
+  labs(title = "", x = "District", y = "Percentage of Loans")+
+  scale_colour_grey()+
+  theme_bw()+
+  theme(text = element_text(size=30))+
+  ylim(0,40)+
+  facet_wrap(. ~ Source)
+```
+
+#### Fig. 2a in the paper
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+p_Fig2a
+ggsave("Figures/Fig2a.svg", p_Fig2a, width = 20, height = 10)
+ggsave("Figures/Fig2a.png", p_Fig2a, width = 20, height = 10)
+
+```
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#Loan counts with all the possibly mediated loans removed:
+
+d <- counts_real[which(counts_real$District %in% c("Rutul", "Tsunta", "Botlikh", "Akhvakh", "Akhty")),]
+d$Turkic_proportion <- d$Turkic_Loans/d$List_Size
+d$Avar_proportion <- d$Avar_Loans/d$List_Size
+d$Georgian_proportion <- d$Georgian_Loans/d$List_Size
+d$Chechen_proportion <- d$Chechen_Loans/d$List_Size
+d$District[which(d$District %in% c("Rutul", "Akhty"))] <- "South"
+d$District[which(d$District %in% c("Botlikh", "Akhvakh"))] <- "Northeast"
+d$District[which(d$District %in% c("Tsunta"))] <- "Northwest"
+
+d %>% DT::datatable(class = 'cell-border stripe', 
+          filter = 'top',
+          extensions = 'Buttons', 
+          options = list(
+            scrollX = TRUE,
+            order = list(2, 'asc'),
+            autoWidth = TRUE,
+            columnDefs = list(list(width = '50px', targets = c(1, 5))),
+            pageLength = 10,
+            dom = 'lBfrtip',
+            buttons = c('copy', 'csv'))) -> d_view
+```
+
+#### The Dataset for Fig. 2b in the paper
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+d_view
+```
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#Plotting the numbers of loans 
+
+d_gathered <- gather(d[,c(1:4, 10:13)], Source, Proportion, -c(Language, District, Village, Code))
+d_gathered$Source %>%
+  stringr::str_replace("_proportion", " Loans") %>% 
+  factor(levels = c("Turkic Loans", "Avar Loans", "Georgian Loans", "Chechen Loans")) -> d_gathered$Source
+d_gathered_no_mediation <- d_gathered
+d_gathered_no_mediation$Type <- rep("No 'shared' loanwords", nrow(d_gathered_no_mediation))
+d_both_types <- bind_rows(d_gathered_no_mediation, d_gathered_incl_mediation)
+d_both_types$Type <- factor(d_both_types$Type)
+d_gathered$Percentage <- d_gathered$Proportion*100
+p_Fig2b <- ggplot(data = d_gathered, aes(x = District, y = Percentage)) +
+  geom_jitter(size = 3, position = position_jitter(width = 0.1, height = 0.0), show.legend = TRUE, color = "black", aplha = 0.8) +
+  stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5)+
+  stat_summary(fun.y=median, geom="label", aes(label=sprintf("%1.1f", ..y..)), 
+               size=8, show.legend=FALSE, color = "black", alpha = 0.6, position=position_nudge(x = -0.4, y = 0))+
+  labs(title = "", x = "District", y = "Percentage of Loans")+
+  scale_colour_grey()+
+  theme_bw()+
+  theme(text = element_text(size=30))+
+  ylim(0,40)+
+  facet_wrap(. ~ Source)
+```
+
+#### Fig. 2b in the paper
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+p_Fig2b
+ggsave("Figures/Fig2b.svg", p_Fig2b, width = 20, height = 10)
+ggsave("Figures/Fig2b.png", p_Fig2b, width = 20, height = 10)
+
+```
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+# Preparing the dataset for Fig. 8.
+
+d_both_types$Color <- d_both_types$Type
+d_both_types$Color <- as.character(d_both_types$Color)
+#Assigning colors
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source %in% c("Chechen Loans", "Georgian Loans")] <- "black"
+d_both_types$Color[d_both_types$Type != "No 'shared' loanwords" & d_both_types$Source %in% c("Chechen Loans", "Georgian Loans")] <- "darkgrey"
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source == "Georgian Loans" & d_both_types$District == "Northwest"] <- "darkgrey"
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source == "Chechen Loans" & d_both_types$District == "Northeast"] <- "darkgrey"
+
+
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source == "Turkic Loans" & d_both_types$District %in% c("Northwest", "Northeast")] <- "black"
+d_both_types$Color[d_both_types$Type != "No 'shared' loanwords" & d_both_types$Source == "Turkic Loans" & d_both_types$District %in% c("Northwest", "Northeast")] <- "darkgrey"
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source == "Avar Loans" & d_both_types$District %in% c("Northwest", "Northeast")] <- "darkgrey"
+d_both_types$Color[d_both_types$Type != "No 'shared' loanwords" & d_both_types$Source == "Avar Loans" & d_both_types$District %in% c("Northwest", "Northeast")] <- "black"
+
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source == "Turkic Loans" & d_both_types$District %in% c("South")] <- "darkgrey"
+d_both_types$Color[d_both_types$Type != "No 'shared' loanwords" & d_both_types$Source == "Turkic Loans" & d_both_types$District %in% c("South")] <- "black"
+d_both_types$Color[d_both_types$Type == "No 'shared' loanwords" & d_both_types$Source == "Avar Loans" & d_both_types$District %in% c("South")] <- "black"
+d_both_types$Color[d_both_types$Type != "No 'shared' loanwords" & d_both_types$Source == "Avar Loans" & d_both_types$District %in% c("South")] <- "darkgrey"
+d_both_types$Color <- as.factor(d_both_types$Color)
+d_both_types$Percentage <- d_both_types$Proportion*100
+p_Fig8 <- ggplot(data = d_both_types, aes(x = District, y = Percentage, color = Color, group = Type, Village = Village, Language = Language)) +
+  geom_jitter(size = 3, position = position_jitter(width = 0.1, height = 0), show.legend = TRUE, aplha = 0.9) +
+  stat_summary(fun.y = median, fun.ymin = median, fun.ymax = median,
+                 geom = "crossbar", width = 0.5)+
+  stat_summary(fun.y=median, geom="label", aes(label=sprintf("%1.1f", ..y..)), 
+               size=8, show.legend=FALSE, color = "black", alpha = 0.6, position=position_nudge(x = -0.4, y = 0))+
+  labs(title = "", x = "District", y = "Percentage of Loans")+
+  scale_colour_grey()+
+  theme_bw()+
+  theme(text = element_text(size=30), ,
+          legend.direction = "horizontal", legend.position = "none")+
+  ylim(0,40)+
+  facet_wrap(. ~ Source)
+  
+```
+
+#### Fig. 8 in the paper
+
+Each plot in Fig. 8 shows two distributions of elicitations according to the percentage of loanwords. The higher one is based on the total number of loanwords and is copied from Fig. 2a. The lower one is based on the number of loanwords that are not shared with any other donor and is copied from Fig. 2b. In each case, the true amount of loanwords lies somewhere in between. But we have highlighted as darker the distribution to which, we believe, the true values are closer. In one case we do not think we have not enough evidence to decide. 
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ggsave("Figures/Fig8.svg", p_Fig8, width = 20, height = 10)
+ggsave("Figures/Fig8.png", p_Fig8, width = 20, height = 10)
+
+p_Fig8
+```
+
+#### Fig. 4a in the paper
+
+The scatter plot in Fig. 2a shows the amount of loanwords from Avar and Turkic per elicitation (loanwords shared by several potential donors are excluded from the counts, as in Fig. 2b above). The dots represent individual elicitations. The dots represent villages. Avar is shown on the X axis, and Turkic is shown on the Y axis. Fig. 2a, similarly to Fig. 2b, the chart shows a very clear divide between the South, the domain of Azerbaijani, and the North, the Avar fiefdom.
+
+``` {r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+#The two plots below show the degree of convergence with the four donor languages. The plots suggest that the amounts of Avar and Turkic loans are different in the South and in the North, while the amount of Georgian loans may be higher in the Northwest than in the rest of Daghestan.
+
+
+p_Fig4a <- ggplot(data = d, aes(x = Turkic_proportion, y = Avar_proportion, label = Village)) + 
+  geom_abline(intercept = 0.01, slope = 1, linetype = "dashed", color = "black", size = 2)+
+  geom_text_repel(size = 10, position = position_jitter(width = 0.01, height = 0.01), show.legend = TRUE) +
+  labs(title = "", x = "Proportion of Turkic Loans", y = "Proportion of Avar Loans")+
+  scale_colour_grey()+
+  theme_bw()+
+  annotate(geom = "text", x = 0.1, y = 0.17, label = "North", color = "Black", size = 20)+
+  annotate(geom = "text", x = 0.17, y = 0.1, label = "South", color = "Black", size = 20)+
+  theme(text = element_text(size=30))
+  #xlim(-0.1,0.4)+
+  #ylim(-0.1,0.5)
+p_Fig4a
+ggsave("Figures/Fig4a.svg", p_Fig4a, width = 20, height = 10)
+ggsave("Figures/Fig4a.png", p_Fig4a, width = 20, height = 10)
+
+```
+
+### Avar and Chechen/Georigan mediation in the North
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+turkic_west <- Turkic_loans_incl_mediated[Turkic_loans_incl_mediated$Village %in% c("Kidero", "Bezhta"),]
+turkic_west <- turkic_west[turkic_west$Set %nin% to_remove$Set,] 
+
+turkic_west_direct <- turkic_west[turkic_west$Set %nin% Avar_incl_mediated$Set & turkic_west$Set %nin% Georgian_incl_mediated$Set,]
+turkic_west_direct$Mediation <- rep("Unshared", nrow(turkic_west_direct))
+
+turkic_west_geo <- turkic_west[turkic_west$Set %in% Georgian_incl_mediated$Set,] 
+turkic_west_geo$Mediation <- rep("Shared with Chechen (Northeast) / Georgian (Northwest)", nrow(turkic_west_geo))
+
+turkic_west_geo_not_avar <- turkic_west[turkic_west$Set %nin% Avar_incl_mediated$Set & turkic_west$Set %in% Georgian_incl_mediated$Set,] 
+turkic_west_geo_not_avar$Mediation <- rep("Shared with Chechen (Northeast) / Georgian (Northwest) but not with Avar", nrow(turkic_west_geo_not_avar))
+
+turkic_west_avar <- turkic_west[turkic_west$Set %in% Avar_incl_mediated$Set,] 
+turkic_west_avar$Mediation <- rep("Shared with Avar", nrow(turkic_west_avar))
+
+turkic_west_avar_not_geo <- turkic_west[turkic_west$Set %in% Avar_incl_mediated$Set & turkic_west$Set %nin% Georgian_incl_mediated$Set,] 
+turkic_west_avar_not_geo$Mediation <- rep("Shared with Avar but not with Chechen (Northeast) / Georgian (Northwest)", nrow(turkic_west_avar_not_geo))
+
+turkic_west_total <- turkic_west 
+turkic_west_total$Mediation <- rep("Total Turkic", nrow(turkic_west_total))
+
+t_west <- bind_rows(turkic_west_direct, turkic_west_geo, turkic_west_avar, turkic_west_avar_not_geo, turkic_west_geo_not_avar, turkic_west_total)
+t_west %>% group_by(Village, Mediation) %>% distinct(`Concept nr.`) %>% dplyr::count() -> t_west_counts
+west_totals <- t_west_counts[t_west_counts$Mediation == "Total Turkic",]
+colnames(west_totals)[3] <- "Total"
+t_west_counts <- left_join(t_west_counts, west_totals[,c(1,3)], by = "Village")
+t_west_counts %>% group_by(Village, Mediation) %>% mutate(Percentage = n/Total) -> t_west_counts
+t_west_counts$Label <- paste(as.character(round(t_west_counts$Percentage*100, 1)), paste("%, n =", as.character(t_west_counts$n)), sep = "")
+t_west_counts %>% 
+  ggplot(aes(x = Village, y = n, fill = Mediation))+
+  geom_bar(stat = "identity", position = "dodge")+
+  geom_text(aes(label=Label),stat='identity',position=position_dodge(0.9))+
+  labs(title = "", x = "Village", y = "Turkic Loans")-> p_mediation_west
+
+
+turkic_east <- Turkic_loans_incl_mediated[Turkic_loans_incl_mediated$District %in% c("Botlikh", "Akhvakh"),]
+turkic_east <- turkic_east[turkic_east$Set %nin% to_remove$Set,] 
+
+turkic_east_direct <- turkic_east[turkic_east$Set %nin% Avar_incl_mediated$Set & turkic_east$Set %nin% Chechen_incl_mediated$Set,]
+turkic_east_direct$Mediation <- rep("Unshared", nrow(turkic_east_direct))
+
+turkic_east_che <- turkic_east[turkic_east$Set %in% Chechen_incl_mediated$Set,] 
+turkic_east_che$Mediation <- rep("Shared with Chechen (Northeast) / Georgian (Northwest)", nrow(turkic_east_che))
+
+turkic_east_che_not_avar <- turkic_east[turkic_east$Set %nin% Avar_incl_mediated$Set & turkic_east$Set %in% Chechen_incl_mediated$Set,] 
+turkic_east_che_not_avar$Mediation <- rep("Shared with Chechen (Northeast) / Georgian (Northwest) but not with Avar", nrow(turkic_east_che_not_avar))
+
+turkic_east_avar <- turkic_east[turkic_east$Set %in% Avar_incl_mediated$Set,] 
+turkic_east_avar$Mediation <- rep("Shared with Avar", nrow(turkic_east_avar))
+
+turkic_east_avar_not_che <- turkic_east[turkic_east$Set %in% Avar_incl_mediated$Set & turkic_east$Set %nin% Chechen_incl_mediated$Set,] 
+turkic_east_avar_not_che$Mediation <- rep("Shared with Avar but not with Chechen (Northeast) / Georgian (Northwest)", nrow(turkic_east_avar_not_che))
+
+turkic_east_total <- turkic_east 
+turkic_east_total$Mediation <- rep("Total Turkic", nrow(turkic_east_total))
+
+t_east <- bind_rows(turkic_east_direct, turkic_east_che, turkic_east_avar, turkic_east_avar_not_che, turkic_east_che_not_avar, turkic_east_total)
+t_east %>% group_by(Village, Mediation) %>% distinct(Set) %>% dplyr::count() -> t_east_counts
+east_totals <- t_east_counts[t_east_counts$Mediation == "Total Turkic",]
+colnames(east_totals)[3] <- "Total"
+t_east_counts <- left_join(t_east_counts, east_totals[,c(1,3)], by = "Village")
+t_east_counts %>% group_by(Village, Mediation) %>% mutate(Percentage = n/Total) -> t_east_counts
+t_east_counts$Label <- paste(as.character(round(t_east_counts$Percentage*100, 1)), paste("%, n =", as.character(t_east_counts$n)), sep = "")
+
+t_north_counts <- bind_rows(t_east_counts, t_west_counts)
+t_north_counts$Mediation <- factor(t_north_counts$Mediation, levels =c("Total Turkic", "Shared with Avar", "Shared with Avar but not with Chechen (Northeast) / Georgian (Northwest)", "Shared with Chechen (Northeast) / Georgian (Northwest)", "Shared with Chechen (Northeast) / Georgian (Northwest) but not with Avar", "Unshared"))
+t_north_counts$Village <- factor(t_north_counts$Village, levels =c("Tukita", "Tlibisho", "Tad-Magitl", "Kvankhidatli", "Karata", "Zilo", "Rikvani", "Anchikh", "Bezhta", "Kidero"))
+
+t_north_counts_complete <- tidyr::expand(t_north_counts, Village, Mediation)
+t_north_counts_complete <- left_join(t_north_counts_complete, t_north_counts, by = c("Village", "Mediation"))
+t_north_counts_complete$n[is.na(t_north_counts_complete$n)] <- 0
+t_north_counts_complete <- distinct(t_north_counts_complete)
+
+t_north_counts_complete %>% 
+  ggplot()+
+  geom_col_pattern(
+    aes(x = Village, y = n, 
+        pattern = Mediation, pattern_angle = Mediation, pattern_spacing = Mediation), 
+    fill    = 'white',
+    colour  = 'black',
+    pattern_fill    = 'black',
+    pattern_colour  = 'black',
+    pattern_density = 0.08,
+    position = position_dodge(width=0.8), 
+    width=0.7,
+    stat = "identity",
+  )+
+  #geom_bar(stat = "identity", position=position_dodge(width=0.8), width=0.7)+
+  scale_colour_grey()+
+  theme_bw() +
+  ylim(0,80)+
+  theme(text = element_text(size=22))+
+  labs(title = "", x = "Village", y = "Turkic Loans")+
+  theme(legend.position = "bottom",
+          legend.direction = "horizontal", legend.text=element_text(size=10)) + 
+  guides(fill=guide_legend(nrow=3,byrow=FALSE))+
+  scale_fill_grey()+
+  scale_pattern_spacing_discrete(range = c(0.004, 0.005))+ 
+  guides(pattern = guide_legend(override.aes = list(size=10)))-> p_Fig5 #+
+  #geom_text(aes(label=Label),stat='identity',position=position_dodge(0.9))
+ggsave("Figures/Fig5.svg", p_Fig5, width = 20, height = 10)
+ggsave("Figures/Fig5.png", p_Fig5, width = 20, height = 10)
+
+```
+
+#### Fig. 5 in the paper
+
+For each village, the chart shows the total number of words of Turkic origin (bar 1), those of these words that are shared with Avar, the local lingua franca (bar 2), those that are shared with Avar only (bar 3), those shared with the locally important neighbour, Chechen in the Northeast and Georgian in the Northwest (the Donor 2 in bar 4) and those shared with it only (bar 5) as well as the number of Turkic words that are not shared with either of them. We can see that it is typical that the second bar gets close to the first bar. Essentially, this means that most Turkic loanwords attested in the village are also present in Avar. Turkic loanwords not shared with either of the bigger languages are few across the table. In Kidero, they are not attested at all. There remains a possibility that some of the Turkic loanwords did not enter the minority languages either directly or via a lingua franca but through the mediation of another locally important language or dialect other than lingua franca. This could be Chechen in the Northeast or Georgian in the Northwest. Given that the observed amount of loanwords from Chechen and Georgian in Fig. 2 in the North is almost non-existent, this probability seems to be low. Fig, 5 confirms the expectation; in all cases except Zilo, Turkic loanwords shared with Chechen (Georgian) shown by bar 4 are visibly fewer than those shared with Avar (bar 2).
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+p_Fig5
+```
+
+
+### Lezgian and Akhty Lezgian mediaton in the South:
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+#South
+turkic_south <- Turkic_loans_incl_mediated[Turkic_loans_incl_mediated$District %in% c("Rutul", "Akhty") & Turkic_loans_incl_mediated$Language %in% c("Tsakhur", "Rutul"),]
+turkic_south <- turkic_south[turkic_south$Set %nin% to_remove$Set,] 
+
+turkic_south_direct <- turkic_south[turkic_south$Set %nin% Lezgian_incl_mediated$Set & turkic_south$Set %nin% Akhty_incl_mediated$Set,]
+turkic_south_direct$Mediation <- rep("Unshared", nrow(turkic_south_direct))
+
+turkic_south_akhty <- turkic_south[turkic_south$Set %in% Akhty_incl_mediated$Set,] 
+turkic_south_akhty$Mediation <- rep("Shared with Akhty Lezgian", nrow(turkic_south_akhty))
+
+turkic_south_akhty_not_lezgian <- turkic_south[turkic_south$Set %nin% Lezgian_incl_mediated$Set & turkic_south$Set %in% Akhty_incl_mediated$Set,] 
+turkic_south_akhty_not_lezgian$Mediation <- rep("Shared with Akhty Lezgian but not with Lezgian", nrow(turkic_south_akhty_not_lezgian))
+
+turkic_south_lezgian <- turkic_south[turkic_south$Set %in% Lezgian_incl_mediated$Set,] 
+turkic_south_lezgian$Mediation <- rep("Shared with Lezgian", nrow(turkic_south_lezgian))
+
+turkic_south_lezgian_not_akhty <- turkic_south[turkic_south$Set %in% Lezgian_incl_mediated$Set & turkic_south$Set %nin% Akhty_incl_mediated$Set,] 
+turkic_south_lezgian_not_akhty$Mediation <- rep("Shared with Lezgian but not with Akhty Lezgian", nrow(turkic_south_lezgian_not_akhty))
+
+turkic_south_total <- turkic_south 
+turkic_south_total$Mediation <- rep("Total Turkic", nrow(turkic_south_total))
+
+t_south <- bind_rows(turkic_south_direct, turkic_south_akhty, turkic_south_lezgian, turkic_south_lezgian_not_akhty, turkic_south_akhty_not_lezgian, turkic_south_total)
+t_south %>% group_by(Village, Mediation) %>% distinct(Set) %>% dplyr::count() -> t_south_counts
+south_totals <- t_south_counts[t_south_counts$Mediation == "Total Turkic",]
+colnames(south_totals)[3] <- "Total"
+t_south_counts <- left_join(t_south_counts, south_totals[,c(1,3)], by = "Village")
+t_south_counts %>% group_by(Village, Mediation) %>% mutate(Percentage = n/Total) -> t_south_counts
+t_south_counts$Label <- paste(as.character(round(t_south_counts$Percentage*100, 1)), paste("%, n =", as.character(t_south_counts$n)), sep = "")
+
+t_south_counts$Mediation <- factor(t_south_counts$Mediation, levels =c("Total Turkic", "Shared with Lezgian", "Shared with Lezgian but not with Akhty Lezgian", "Shared with Akhty Lezgian", "Shared with Akhty Lezgian but not with Lezgian", "Unshared"))
+t_south_counts$Village <- factor(t_south_counts$Village, levels =c("Mikik", "Kurdul", "Gelmets", "Kina", "Khnov", "Ikhrek", "Kiche", "Rutul"))
+
+t_south_counts_complete <- tidyr::expand(t_south_counts, Village, Mediation)
+t_south_counts_complete <- left_join(t_south_counts_complete, t_south_counts, by = c("Village", "Mediation"))
+t_south_counts_complete$n[is.na(t_south_counts_complete$n)] <- 0
+t_south_counts_complete <- distinct(t_south_counts_complete)
+t_south_counts_complete %>% 
+  ggplot()+
+  geom_col_pattern(
+    aes(x = Village, y = n, 
+        pattern = Mediation, pattern_angle = Mediation, pattern_spacing = Mediation), 
+    fill    = 'white',
+    colour  = 'black',
+    pattern_fill    = 'black',
+    pattern_colour  = 'black',
+    pattern_density = 0.08,
+    position = position_dodge(width=0.8), 
+    width=0.7,
+    stat = "identity",
+  )+
+  #geom_bar(stat = "identity", position=position_dodge(width=0.8), width=0.7)+
+  scale_colour_grey()+
+  theme_bw() +
+  ylim(0,80)+
+  theme(text = element_text(size=25))+
+  labs(title = "", x = "Village", y = "Turkic Loans")+
+  theme(legend.position = "bottom",
+          legend.direction = "horizontal", legend.text=element_text(size=10)) + 
+  guides(fill=guide_legend(nrow=3,byrow=FALSE))+
+  scale_fill_grey()+
+  scale_pattern_spacing_discrete(range = c(0.004, 0.005))+ 
+  guides(pattern = guide_legend(override.aes = list(size=10))) -> p_Fig6
+#+
+  #geom_text(aes(label=Label),stat='identity',position=position_dodge(0.9))
+ggsave("Figures/Fig6.svg", p_Fig6, width = 20, height = 10)
+ggsave("Figures/Fig6.png", p_Fig6, width = 20, height = 10)
+
+```
+
+#### Fig. 6 in the paper
+
+In Fig. 6, bar 2 corresponds to standard Lezgian and bar 4 corresponds to the local dialect of Lezgian, the two languages that are the closest matches for Avar and Chechen/Georgian in the North. (We cannot use Azerbaijani, the perfect match for Avar, because it is the possibility of mediation of Turkic loanwords that we are considering, and Azerbaijani is a Turkic language and the source of these loanwords in the first place). In addition to the obvious decrease in the number of Turkic loanwords, we see another important difference. Bar 2, the Turkic loanwords that the village shares with standard Lezgian, is much lower than bar 1, the total number of the loanwords, and there are almost no loanwords shared with standard Lezgian only. Essentially, in each village, Turkic loanwords include those that are shared with the local variety of Lezgian (bar 2) and those that are unshared (bar 5). Unlike the North, unshared loanwords may be quite a few. One could conclude, as we did for Avar as a mediator of the North, that in the South many loanwords have been mediated by the local Lezgian. However, unlike the North, bar 5 (the number of the Turkic loanwords attested in the village but not in the major language, Lezgian, or its local variety, Akhty Lezgian) tends to be relatively high, especially in the Tsakhur villages of Mikik, Gelmets and Kurdul. There are quite a few Turkic loanwords in minority languages that are not attested in our Lezgian data, either standard or dialect. Note that these three villages also show the highest amount of Turkic loanwords. Bilingualism rates indicate that the knowledge of Azerbaijani among the Tsakhurs was much higher (between 90 and 100 percent) than in the Lezgian villages in our sample. We thus suggest that it was in fact Tsakhur that could have mediated Turkic lexicon to the local (but not the standard) variety of Lezgian rather than the other way around. 
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+p_Fig6
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+t_mediation_complete <- bind_rows(t_south_counts_complete, t_north_counts_complete)
+t_mediation_complete <- t_mediation_complete[t_mediation_complete$Mediation %in% c("Shared with Avar", "Shared with Lezgian", "Shared with Akhty Lezgian", "Shared with Chechen (Northeast) / Georgian (Northwest)"),]
+t_mediation_complete$Mediation1[t_mediation_complete$Mediation %in% c("Shared with Akhty Lezgian", "Shared with Chechen (Northeast) / Georgian (Northwest)")] <- "Donor2"
+#"Shared with Akhty Lezgian (South) / Chechen (Northeast) / Georgian (Northwest)"
+t_mediation_complete$Mediation1[t_mediation_complete$Mediation %in% c("Shared with Avar", "Shared with Lezgian")] <- "LF"
+t_mediation_complete$Mediation <- t_mediation_complete$Mediation1
+
+#"Shared with Lezgian (South) / Avar (North)"
+t_mediation_complete_wide <- spread(t_mediation_complete[,-c(3,4,6,7)], Mediation, Percentage)
+
+t_mediation_complete_wide %>% 
+  ggplot(aes(x = Donor2*100, y = LF*100, label = Village)) +
+  geom_text_repel(size = 10, position = position_jitter(width = 0.1, height = 0.01), show.legend = TRUE, color = "black", aplha = 0.9) +
+  labs(title = "", x = "Shared with Donor 2\n(Akhty dialect of Lezgian in the South,\nGeorgian in the Northwest, Chechen in the Northeast)", y = "Shared with Donor 1\n(Standard Lezgian in the South, Avar in the North)")+
+  scale_colour_grey()+
+  theme_bw()+
+  geom_abline(intercept = 0.01, slope = 1, linetype = "dashed", color = "black", size = 2)+
+  annotate(geom = "text", x = 25, y = 50, label = "North", color = "Black", size = 20)+
+  annotate(geom = "text", x = 50, y = 25, label = "South", color = "Black", size = 20)+
+  xlim(0,100)+
+  ylim(0,100)+
+  theme(text = element_text(size=20)) -> p_Fig7
+```
+
+#### Fig. 7 in the paper
+
+In Fig. 7, the X axis shows the percentage of Turkic loanwords shared with the locally relevant major language.  In the North this is Avar. As in Fig. 5 and 6 above, we take standard Lezgian in the South to compare with Avar. On the Y axis, the second potential mediator is shown, Chechen in the Northeast, and Georgian in the Northwest. For the sake of comparison, we take Akhty dialect of Lezgian in the South. The chart shows an articulated difference between the North and the South. As argued above, we interpret it in the following way: most of Turkic influence on the small languages in the North was probably mediated by Avar, while a substantial amount of Turkic lexical influence on the Akhty dialect of Lezgian was probably mediated by the local small languages in a more contact with Turkic, e.g. Tsakhur.
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ggsave("Figures/Fig7.svg", p_Fig7, width = 20, height = 10)
+ggsave("Figures/Fig7.png", p_Fig7, width = 20, height = 10)
+
+p_Fig7
+```
+
+# Regression analysis
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ml_data <- read_tsv("Multilingualism_data.tsv")
+ml_data$District <- factor(ml_data$District)
+fit_turk <- bayesglm(Turkic ~ District, data = ml_data, family = binomial)
+fit_avar <- bayesglm(Avar ~ District, data = ml_data, family = binomial)
+fit_geo <- bayesglm(Georgian ~ District, data = ml_data, family = binomial)
+fit_che <- bayesglm(Chechen ~ District, data = ml_data, family = binomial)
+
+p_turk <- plot_model(fit_turk, type = "eff")$District + 
+  ggtitle("Turkic")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,1))
+p_avar <- plot_model(fit_avar, type = "eff")$District + 
+  ggtitle("Avar")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,1))
+p_geo <- plot_model(fit_geo, type = "eff")$District + 
+  ggtitle("Georgian")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,1))
+p_che <- plot_model(fit_che, type = "eff")$District + 
+  ggtitle("Chechen")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,1))
+p_Fig10 <- ggarrange(p_turk, p_avar, p_geo, p_che, nrow = 1)
+
+#The same for loans
+wl_data <- words_meta[words_meta$District %in% c("Akhvakh", "Botlikh", "Tsunta", "Rutul", "Akhty"),]
+wl_data$District[wl_data$District %in% c("Akhvakh", "Botlikh")] <- "Northeast"
+wl_data$District[wl_data$District %in% c("Rutul", "Akhty")] <- "South"
+wl_data$District[wl_data$District %in% c("Tsunta")] <- "Northwest"
+
+
+wl_data$Turkic <- ifelse(wl_data$Set %in% Turkic_loans$Set, 1, 0)
+wl_data$Avar <- ifelse(wl_data$Set %in% Avar_loans$Set & wl_data$entry_id %nin% cognates$entry_id, 1, 0)
+wl_data$Georgian <- ifelse(wl_data$Set %in% Georgian_loans$Set, 1, 0)
+wl_data$Chechen <- ifelse(wl_data$Set %in% Chechen_loans$Set, 1, 0)
+#wl_data <- wl_data[wl_data$Set %nin% to_remove$Set,] - DON'T DO THIS, we don't need to remove Russian, Persian and Arabic here because they influence probabilities, too
+#write_tsv(wl_data, "reg_data.tsv")
+
+fit_loans_turk <- bglmer(Turkic ~ District + (1 | Language/Village), data = wl_data, family = binomial, 
+                         control=glmerControl(optimizer="bobyqa",
+                                              optCtrl=list(maxfun=2e5)))
+fit_loans_avar <- bglmer(Avar ~ District + (1 | Language/Village), data = wl_data, family = binomial, 
+                         control=glmerControl(optimizer="bobyqa",
+                                              optCtrl=list(maxfun=2e5)))
+fit_loans_geo <- bglmer(Georgian ~ District + (1 | Language/Village), data = wl_data, family = binomial, 
+                        control=glmerControl(optimizer="bobyqa",
+                                             optCtrl=list(maxfun=2e5)))
+fit_loans_che <- bglmer(Chechen ~ District + (1 | Language/Village), data = wl_data, family = binomial, 
+                        control=glmerControl(optimizer="bobyqa",
+                                             optCtrl=list(maxfun=2e5)))
+
+#Plotting the effects
+p_loans_turk <- plot_model(fit_loans_turk, type = "eff")$District + 
+  ggtitle("Turkic")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,0.3))
+p_loans_avar <- plot_model(fit_loans_avar, type = "eff")$District + 
+  ggtitle("Avar")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,0.3))
+p_loans_geo <- plot_model(fit_loans_geo, type = "eff")$District + 
+  ggtitle("Georgian")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,0.3))
+p_loans_che <- plot_model(fit_loans_che, type = "eff")$District + 
+  ggtitle("Chechen")+
+  theme_bw()+
+  theme(text = element_text(size = 17))+
+  theme(plot.title = element_text(size = 15, face = "bold"))+
+  labs(y= "", x = "")+
+  scale_y_continuous(labels = scales::percent, limits=c(0,0.3))
+
+p_Fig9 <- ggarrange(p_loans_turk, p_loans_avar, p_loans_geo, p_loans_che, nrow = 1)
+
+#p_Fig10_loans_eff
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+wl_data %>% mutate(loan = Turkic + Avar + Georgian + Chechen) -> wl_data
+
+sources <- c("Turkic", "Avar", "Georgian", "Chechen")
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+wl_data %>% count(Language, District) %>% dplyr::select(-n) -> language_district
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+do_test <- function(var) {
+  pairwise_t_test(as.formula(paste(var, " ~ District")), 
+                  data=wl_data %>%
+                    group_by(Concept, District) %>%
+                    summarise(across(c(all_of(sources), "loan"), mean),
+                              .groups='drop'),
+                  detailed = TRUE,
+                  paired=TRUE)  #%>% select(.y., group1, group2, p.adj)
+}
+```
+
+Fig. 9 and 10 show effect plots for Bayesian logistic regression using the area to predict the probability of a concept to be translated by a loanword from a specific language and for a person to be bilingual in a specific language, respectively. We included regression analysis for bilingualism rates because the data on people born before 1919 are in fact scarce enough to require a test for statistical significance together with our data on lexical borrowing. Bayesian logistic regression was used in order to bypass the problems caused by perfect separation in the multilingualism data (e.g. in the Northeast there is not a single L2 speaker of Georgian, whereas in the Northwest there are no L2 speakers of Chechen, which results in the probability of zero at these predictor levels and makes the more frequently used glm and glmer inapplicable). The regression based on multilingualism data was fitted using the bayesglm function from the arm R package (Gelman and Su 2018). The regression for loanword data used the bglmer function from the blme R package (Chung et al. 2013).
+The regression modelling was conducted as follows. Each entry in the loanword data was annotated for the source language using one dummy variable column per potential donor (Turkic, Avar, Georgian and Chechen). If a word is a loan from a particular language, it was marked with a “1” in the relevant column and “0” in the others, non-loans were marked with “0” in all columns. Multilingualism data were structured similarly: each line of the dataset corresponded to one speaker, four dummy columns encoded their L2 knowledge. Four separate models were fitted, one for each donor language or L2. In the regression based on multilingualism data (Fig. 9), the only predictor was the district. In the loanword regression we introduced a random intercept for every village nested into language to control for eventual differences between languages and villages. The data and the code for the models are provided in the supplement.
+
+The Y axis shows the percentage of loanwords in the elicitation (Fig. 9) and bilinguals in the village (Fig. 10). On the X axis, the three areas are shown. In the figures, the confidence intervals for the effect of the area are shown as vertical lines. We can argue for a statistically significant areal signal when the confidence intervals for the areas do not overlap. Turkic shows significant presence in the South, while Avar is the major stakeholder in the North, with the difference between the Northwest and the Northeast not being statistically significant. Georgian influence is higher in the Northwest than in other areas. As discussed in Section 4, lexical borrowing from Chechen proves not to be significant in the Northeast - where it could be expected geographically - as opposed to other areas. Note that, in terms of bilingualism in Chechen, the Northeast is not different from the Northwest at a statistically significant level; but this is most likely due to the fact that we considered Northeast as a whole, while knowledge of Chechen is only attested in the two villages out of ten, and even there was not very high. 
+
+More generally, the figures suggest that the areal differences in terms of bilingualism are stronger than in terms of lexical borrowing. Note that Fig. 9, which is intended to show that areal differences are statistically significant, is based on the conservative, lower counts (i.e. excluding all sharings). If the interpretation of mediated borrowing discussed in Section 4.2 and shown in Fig. 8 is correct, then the difference between lexical borrowing from Avar and Azerbaijani, the two lingua francas, on the one hand, and from locally important languages, Georgian and Chechen, may be stronger.
+
+#### Fig. 9 in the paper
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ggsave("Figures/Fig9.svg", p_Fig9, width = 20, height = 10)
+ggsave("Figures/Fig9.png", p_Fig9, width = 20, height = 10)
+
+p_Fig9
+```
+
+#### Fig. 10 in the paper
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+ggsave("Figures/Fig10.svg", p_Fig10, width = 20, height = 10)
+ggsave("Figures/Fig10.png", p_Fig10, width = 20, height = 10)
+
+p_Fig10
+```
+
+# T-tests
+
+In our data, there is a possible factor that must be excluded. It could be that the areal differences we observed in the first two models are due to the impact from very few highly borrowable concepts. If these concepts are very few, the fact that those in the South  are borrowed from Azerbaijani and those in the North are borrowed from Avar can be due to chance. To exclude this, we have compared the distributions of the probability of borrowing different concepts from a specific donor by using a t-test. The tests were conducted as follows. First, four dummy variables (Turkic, Avar, Georgian and Chechen) were introduced to annotate each word for its donor language. Each entry in the dataset was annotated for its donor language with a “1” value if the word is borrowed from a given source and “0” if it is not. Then, for each concept the mean probabilities were calculated within each region. The sets of means (160 values per region) were then compared. The results of the pairwise t-tests are provided in Table 2. We use the Bonferroni correction for multiple comparison and take .01 as a significance level. Differences that are statistically significant after the Bonferroni correction are indicated by an asterisk.
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+for (source in sources) {
+  print(do_test(source))
+}
+```
+
+
+## 3. Simulated data
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+#Now we have real counts and can proceed to the simulations.
+
+### 3.1. Reading the data
+
+#Reading the data again, similarly to the previous time.
+
+meta <- as.data.frame(read_tsv("meta_anonymized.tsv"))
+words <- as.data.frame(preproc_data("words_data.tsv"))
+words_meta <- left_join(meta, words, by = "Code")
+words_meta$Set <- paste(words_meta$`Concept nr.`, words_meta$Stem, sep = " - ")
+words_meta <- words_meta[which(words_meta$Language_Paper == 1),]
+words_meta <- words_meta[-which(names(words_meta) %in% c("cognate"))]
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.2. Creating a new artificially inflated dataset
+
+#The chunk below pulls speaker IDs from the original sample in sets of 42 (21 per North/South region) from the source sample. We select equal number of speakers per region to ensure that there is no geographical bias in the sample caused by the size of the sample from each region. 
+
+iterations <- 1000
+relevant_entries <- words_meta[words_meta$District %in% c("Rutul", "Tsunta", "Akhvakh", "Botlikh", "Akhty"),]
+relevant_entries$District[relevant_entries$District %in% c("Rutul", "Akhty")] <- "South"
+relevant_entries$District[relevant_entries$District %in% c("Akhvakh", "Botlikh", "Tsunta")] <- "North"
+relevant_entries <- relevant_entries[!duplicated(relevant_entries),]
+
+
+speakers <-  replicate(iterations, (relevant_entries[!duplicated(relevant_entries$Code),] %>% group_by(District) %>% sample_n(25)), simplify = "matrix")
+speakers <- unlist(speakers[4,])
+speakers <- as.data.frame(speakers)
+
+Iter <- c()
+for (i in c(1:iterations)){
+  Iter <- c(Iter, rep(i, nrow(speakers)/iterations))
+}
+speakers$Iter <- Iter
+speakers$Code_Iter <- paste(speakers$speakers, speakers$Iter, sep = "_")
+
+relevant_sets <- words_meta[words_meta$District %in% c("Rutul", "Akhty", "Tsunta", "Akhvakh", "Botlikh"),]
+colnames(speakers)[1] <- "Code"
+relevant_sets$Code <- factor(relevant_sets$Code)
+Fake_words_meta <- left_join(relevant_sets, speakers,  by = "Code")
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.3. Shuffling similarity sets
+
+#This code chunk takes the new set of speakers, which is a bootstrapped version of the original one and samples new sets for each speaker. The concept ID is preserved bu the sets are assigned with a pan-Daghestanian probability.
+
+Fake_words_meta %>% group_by(`Concept nr.`) %>% mutate(New_Set = sample(Set)) -> Fake_words_meta
+```
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.4. Specifying the external loans; Counting the relevant ones
+
+#Now, the loans that are irrelevant for the study have to be specified and removed because they may confound the signal we're interested in. These are the words possibly borrowed from Russian, Arabic and Persian in all languages and Avar cognates (not Avar loans) in the languages of the Northern part of Daghestan. 
+
+to_remove <- words_meta[which(words_meta$Code %in% c("E_Russian", "E_Arabic", "E_Persian")),]
+Fake_words_meta <- Fake_words_meta[which(Fake_words_meta$Set %nin% to_remove$Set),]
+colnames(cognates)[c(2)] <- c("New_Set")
+Fake_words_meta <- right_join(cognates[which(names(cognates) %in% c("cognate", "Language", "New_Set"))], Fake_words_meta, by = c("Language", "New_Set"))
+Fake_words_meta <- Fake_words_meta[-which(Fake_words_meta$cognate == "yes"),]
+Fake_words_meta <- Fake_words_meta[-which(names(Fake_words_meta) %in% c("cognate"))]
+```
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.5. Subsetting the data
+
+Fake_Turkic_loans <- as.data.frame(Fake_words_meta[Fake_words_meta$New_Set %in% Turkic$Set,])
+
+Fake_Avar_loans <- as.data.frame(Fake_words_meta[Fake_words_meta$New_Set %in% Avar$Set,])
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.6. Means for shuffled data
+
+#Calculating the loanwords from each source in the permuted sample. Since the data are organized in a way that the wordlists with 0 loans are lost when subsetting, it is necessary to add the lost lists explicitely (see the *fake_counts* function). Then the districts have to be changed to "North vs. South" one again. This may be not relevant for Avar and Turkic, because any list has at least one supposed loan from any of the two donors, but may play a role for Chechen and Georgian because there are such cases. To make sure that the same procedure is applied each time, I also run it here.
+
+Fake_Turkic_counts <- fake_counts(Fake_Turkic_loans, Turkic_loans, "Turkic")
+Fake_Turkic_counts <- Fake_Turkic_counts[-which(names(Fake_Turkic_counts) %in% c("District"))]
+Fake_Turkic_counts <- left_join(Fake_Turkic_counts, counts_real[names(counts_real) %in% c("Code", "District")], by = "Code")
+Fake_Turkic_counts$District[Fake_Turkic_counts$District %in% c("Rutul", "Akhty")] <- "South"
+Fake_Turkic_counts$District[Fake_Turkic_counts$District %in% c("Akhvakh", "Botlikh", "Tsunta")] <- "North"
+Fake_Turkic_means <- fake_means(Fake_Turkic_counts)
+
+Fake_Avar_counts <- fake_counts(Fake_Avar_loans, Avar_loans, "Avar")
+Fake_Avar_counts <- Fake_Avar_counts[-which(names(Fake_Avar_counts) %in% c("District"))]
+Fake_Avar_counts <- left_join(Fake_Avar_counts, counts_real[names(counts_real) %in% c("Code", "District")], by = "Code")
+Fake_Avar_counts$District[Fake_Avar_counts$District %in% c("Rutul", "Akhty")] <- "South"
+Fake_Avar_counts$District[Fake_Avar_counts$District %in% c("Akhvakh", "Botlikh", "Tsunta")] <- "North"
+Fake_Avar_means <- fake_means(Fake_Avar_counts)
+
+```
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.6. Plots for Turkic and Avar influence with deltas.
+
+D_test <- Fake_Turkic_means
+D_test$District[D_test$District %in% c("Akhvakh", "Botlikh", "Tsunta")] <- "North"
+D_test$District[D_test$District %in% c("Rutul", "Akhty")] <- "South"
+D_percentage_north <- scales::percent(nrow(D_test[D_test$District == "North" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "North",]))
+D_percentage_south <- scales::percent(nrow(D_test[D_test$District == "South" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "South",]))
+
+D_percentages <- c(paste("North:", as.character(D_percentage_north), "of Δ’s are greater than 0."), paste("South:", as.character(D_percentage_south), "of Δ’s are greater than 0."))
+names(D_percentages) <- c("North", "South")
+
+p_Fig11a <- makeplot(D_test, "Turkic")
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+D_test <- Fake_Avar_means
+D_test$District[D_test$District %in% c("Akhvakh", "Botlikh", "Tsunta")] <- "North"
+D_test$District[D_test$District %in% c("Rutul", "Akhty")] <- "South"
+D_percentage_north <- scales::percent(nrow(D_test[D_test$District == "North" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "North",]))
+D_percentage_south <- scales::percent(nrow(D_test[D_test$District == "South" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "South",]))
+
+D_percentages <- c(paste("North:", as.character(D_percentage_north), "of Δ’s are greater than 0."), paste("South:", as.character(D_percentage_south), "of Δ’s are greater than 0."))
+names(D_percentages) <- c("North", "South")
+
+p_Fig11b <- makeplot(D_test, "Avar")
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.7. Simulated data for Georgian and Chechen
+
+#Let us now do the same for Chechen and Georgian. The approach is more or less the same, only the sampling of regions and speakers is different (we only take three northern districts *Akhvakh*, *Botlikh*, and *Tsunta* and 4 speakers per region because there are only 4 speakers in the Tsunta district).
+
+meta <- as.data.frame(read_tsv("meta_anonymized.tsv"))
+words <- as.data.frame(preproc_data("words_data.tsv"))
+words_meta <- left_join(meta, words, by = "Code")
+words_meta$Set <- paste(words_meta$`Concept nr.`, words_meta$Stem, sep = " - ")
+words_meta <- words_meta[which(words_meta$Language_Paper == 1),]
+words_meta <- words_meta[-which(names(words_meta) %in% c("cognate"))]
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+iterations <- 1000
+relevant_entries <- words_meta[words_meta$District %in% c("Tsunta", "Akhvakh", "Botlikh"),]
+relevant_entries$District[relevant_entries$District %in% c("Akhvakh", "Botlikh")] <- "North"
+relevant_entries$District[relevant_entries$District %in% c("Tsunta")] <- "West"
+relevant_entries <- relevant_entries[!duplicated(relevant_entries),]
+
+speakers <-  replicate(iterations, (relevant_entries[!duplicated(relevant_entries$Code),] %>% group_by(District) %>% sample_n(5)), simplify = "matrix")
+speakers <- unlist(speakers[4,])
+speakers <- as.data.frame(speakers)
+
+Iter <- c()
+for (i in c(1:iterations)){
+  Iter <- c(Iter, rep(i, nrow(speakers)/iterations))
+}
+speakers$Iter <- Iter
+speakers$Code_Iter <- paste(speakers$speakers, speakers$Iter, sep = "_")
+
+relevant_sets <- words_meta[words_meta$District %in% c("Tsunta", "Akhvakh", "Botlikh"),]
+colnames(speakers)[1] <- "Code"
+relevant_sets$Code <- factor(relevant_sets$Code)
+Fake_words_meta <- left_join(relevant_sets, speakers,  by = "Code")
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+Fake_words_meta %>% group_by(`Concept nr.`) %>% mutate(New_Set = sample(Set)) -> Fake_words_meta
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+to_remove <- words_meta[which(words_meta$Code %in% c("E_Russian", "E_Arabic", "E_Persian")),]
+Fake_words_meta <- Fake_words_meta[which(Fake_words_meta$Set %nin% to_remove$Set),]
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+Fake_Georgian_loans <- as.data.frame(Fake_words_meta[Fake_words_meta$New_Set %in% Georgian$Set,])
+
+Fake_Chechen_loans <- as.data.frame(Fake_words_meta[Fake_words_meta$New_Set %in% Chechen$Set,])
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+Fake_Georgian_counts <- fake_counts(Fake_Georgian_loans, Georgian_loans, "Georgian")
+Fake_Georgian_counts <- Fake_Georgian_counts[-which(names(Fake_Georgian_counts) %in% c("District"))]
+Fake_Georgian_counts <- left_join(Fake_Georgian_counts, counts_real[names(counts_real) %in% c("Code", "District")], by = "Code")
+Fake_Georgian_counts$District[Fake_Georgian_counts$District %in% c("Akhvakh", "Botlikh")] <- "North"
+Fake_Georgian_counts$District[Fake_Georgian_counts$District %in% c("Tsunta")] <- "West"
+Fake_Georgian_means <- fake_means(Fake_Georgian_counts)
+
+Fake_Chechen_counts <- fake_counts(Fake_Chechen_loans, Chechen_loans, "Chechen")
+Fake_Chechen_counts <- Fake_Chechen_counts[-which(names(Fake_Chechen_counts) %in% c("District"))]
+Fake_Chechen_counts <- left_join(Fake_Chechen_counts, counts_real[names(counts_real) %in% c("Code", "District")], by = "Code")
+Fake_Chechen_counts$District[Fake_Chechen_counts$District %in% c("Akhvakh", "Botlikh")] <- "North"
+Fake_Chechen_counts$District[Fake_Chechen_counts$District %in% c("Tsunta")] <- "West"
+Fake_Chechen_means <- fake_means(Fake_Chechen_counts)
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+
+### 3.8. Plots for Georgian and Chechen influence with deltas.
+
+D_test <- Fake_Georgian_means
+D_test$District[D_test$District %in% c("Akhvakh", "Botlikh")] <- "North"
+D_test$District[D_test$District %in% c("Tsunta")] <- "West"
+D_percentage_north <- scales::percent(nrow(D_test[D_test$District == "North" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "North",]))
+D_percentage_west <- scales::percent(nrow(D_test[D_test$District == "West" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "West",]))
+
+D_percentages <- c(paste("Northwest:", as.character(D_percentage_west), "of Δ’s are greater than 0."), paste("Northeast:", as.character(D_percentage_north), "of Δ’s are greater than 0."))
+names(D_percentages) <- c("West", "North")
+
+p_Fig11c <- makeplot(D_test, "Georgian")
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+D_test <- Fake_Chechen_means
+D_test$District[D_test$District %in% c("Akhvakh", "Botlikh")] <- "North"
+D_test$District[D_test$District %in% c("Tsunta")] <- "West"
+D_percentage_north <- scales::percent(nrow(D_test[D_test$District == "North" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "North",]))
+D_percentage_west <- scales::percent(nrow(D_test[D_test$District == "West" & D_test$Delta > 0,])/nrow(D_test[D_test$District == "West",]))
+
+D_percentages <- c(paste("Northwest:", as.character(D_percentage_west), "of Δ’s are greater than 0."), paste("Northeast:", as.character(D_percentage_north), "of Δ’s are greater than 0."))
+names(D_percentages) <- c("West", "North")
+
+p_Fig11d <- makeplot(D_test, "Chechen")
+```
+
+#### Fig. 11 in the paper
+
+In Fig. 11, the plot for Turkic is shown in the top left two and for Avar in the top right two graphs, each comparing North (the left distribution) and South (the right distribution). Similarly, the plot for Georgian is shown at bottom left two and for Chechen at bottom right two graphs, each comparing Northeast (the left distribution) and Northwest (the right distribution). As in the regression model, we see that the higher presence of Turkic in the South than in the North and the higher presence of Avar in the North than in the South are statistically significant. The presence of Georgian in Northwest as compared to Northeast is also significant even though much smaller (compare the scale of the X axis), while the presence of Chechen in Northeast is not. 
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
+p_Fig11 <- ggarrange(p_Fig11a, p_Fig11b, p_Fig11c, p_Fig11d, nrow = 2, ncol = 2)
+ggsave("Figures/Fig11.svg", p_Fig11, width = 20, height = 10)
+ggsave("Figures/Fig11.png", p_Fig11, width = 20, height = 10)
+
+p_Fig11
+```
+
+# References
+
+**The following R packages were used to create this page:**
+
