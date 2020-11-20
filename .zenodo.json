@@ -1,0 +1,20 @@
+{
+    "title": "CLDF dataset accompanying Daniel et al. \"Lingua Franca as Lexical Donors: Evidence from Daghestan\" from 2021",
+    "access_right": "open",
+    "keywords": [
+        "cldf:Wordlist",
+        "linguistics"
+    ],
+    "creators": [],
+    "contributors": [],
+    "communities": [
+        {
+            "identifier": "lexibank"
+        }
+    ],
+    "upload_type": "dataset",
+    "description": "<p>Cite the source of the dataset as:</p>\n\n<blockquote>\n<p>Daniel et al. (2021) Lingua Franca as Lexical Donors: Evidence from Daghestan. Language.</p>\n</blockquote>",
+    "license": {
+        "id": "CC-BY-4.0"
+    }
+}

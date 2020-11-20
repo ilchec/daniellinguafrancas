@@ -1,0 +1,97 @@
+ID,Name,Glottocode,Glottolog_Name,ISO639P3code,Macroarea,Latitude,Longitude,Family,Source,District,Village,DataType,List_ID,SubGroup
+Alibeglo1,Georgian,nucl1302,Georgian,kat,Eurasia,41.378056,46.821944,Kartvelian,chechurofielddata,Qax,Alibeglo,Speaker,1,Kartvelian
+Bezhta1,Bezhta,bezh1248,Bezhta,kap,Eurasia,42.1339,46.1247,East-Caucasian,chechurofielddata,Tsunta,Bezhta,Speaker,8,Tsezic
+D_Botlikh,Botlikh,botl1242,Botlikh,bph,Eurasia,42.665,46.22,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,9,Andic
+D_Agul,Agul,aghu1253,Aghul,agx,Eurasia,41.92418,47.58429,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,10,Lezgic
+E_Azerbaijani,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,40.97767,46.4737,Altaic,suleymanovpc,Expert,Expert,Expert,13,Turkic
+D_Gagatli,Andi,andi1255,Andi,ani,Eurasia,42.800361,46.292645,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,16,Andic
+D_Hinuq,Hinuq,hinu1240,Hinuq,gin,Eurasia,42.1764,45.98646,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,18,Tsezic
+D_Karata,Karata,kara1474,Karata,kpt,Eurasia,42.65005,46.31511,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,19,Andic
+D_Lezgian,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.51572,47.89507,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,21,Lezgic
+E_Russian,Russian,russ1263,Russian,rus,Eurasia,59,50,Indo-European,chechurofielddata,Expert,Expert,Dictionary,22,Slavic
+D_Rutul,Rutul,rutu1240,Rutul,rut,Eurasia,41.61866,47.32436,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,23,Lezgic
+D_Tabasaran,Tabasaran,taba1259,Tabasaran,tab,Eurasia,42.01976,47.83791,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,24,Lezgic
+D_Tsez,Tsez,dido1241,Tsez,ddo,Eurasia,42.26458,45.80959,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,25,Tsezic
+Darvag1,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.022285,48.065912,Altaic,chechurofielddata,Tabasaran,Darvag,Speaker,26,Turkic
+Darvag2,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.022285,48.065912,Altaic,chechurofielddata,Tabasaran,Darvag,Speaker,27,Turkic
+Darvag3,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.022285,48.065912,Altaic,chechurofielddata,Tabasaran,Darvag,Speaker,28,Turkic
+Darvag4,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.022285,48.065912,Altaic,chechurofielddata,Tabasaran,Darvag,Speaker,29,Turkic
+Darvag5,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.022285,48.065912,Altaic,chechurofielddata,Tabasaran,Darvag,Speaker,31,Turkic
+Darvag6,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.022285,48.065912,Altaic,chechurofielddata,Tabasaran,Darvag,Speaker,32,Turkic
+Gelmets1,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.62466,47.17889,East-Caucasian,chechurofielddata,Rutul,Gelmets,Speaker,45,Lezgic
+Gelmets2,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.62466,47.17889,East-Caucasian,chechurofielddata,Rutul,Gelmets,Speaker,46,Lezgic
+Gelmets3,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.62466,47.17889,East-Caucasian,chechurofielddata,Rutul,Gelmets,Speaker,47,Lezgic
+Ikhrek1,Rutul,rutu1240,Rutul,rut,Eurasia,41.693931,47.210005,East-Caucasian,chechurofielddata,Rutul,Ikhrek,Speaker,48,Lezgic
+Ikhrek2,Rutul,rutu1240,Rutul,rut,Eurasia,41.693931,47.210005,East-Caucasian,chechurofielddata,Rutul,Ikhrek,Speaker,49,Lezgic
+Ikhrek3,Rutul,rutu1240,Rutul,rut,Eurasia,41.693931,47.210005,East-Caucasian,chechurofielddata,Rutul,Ikhrek,Speaker,50,Lezgic
+Ikhrek4,Rutul,rutu1240,Rutul,rut,Eurasia,41.693931,47.210005,East-Caucasian,chechurofielddata,Rutul,Ikhrek,Speaker,51,Lezgic
+Ilisu1,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,41.46694,47.05917,Altaic,chechurofielddata,Qax,Ilisu,Speaker,52,Turkic
+Karata1,Karata,kara1474,Karata,kpt,Eurasia,42.5942,46.3419,East-Caucasian,chechurofielddata,Akhvakh,Karata,Speaker,53,Andic
+Karata3,Karata,kara1474,Karata,kpt,Eurasia,42.5942,46.3419,East-Caucasian,chechurofielddata,Akhvakh,Karata,Speaker,55,Andic
+Karata4,Karata,kara1474,Karata,kpt,Eurasia,42.5942,46.3419,East-Caucasian,chechurofielddata,Akhvakh,Karata,Speaker,56,Andic
+Khlyut1,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.496274,47.533824,East-Caucasian,chechurofielddata,Rutul,Khlyut,Speaker,66,Lezgic
+Khlyut2,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.496274,47.533824,East-Caucasian,chechurofielddata,Rutul,Khlyut,Speaker,67,Lezgic
+Khlyut3,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.496274,47.533824,East-Caucasian,chechurofielddata,Rutul,Khlyut,Speaker,68,Lezgic
+Khlyut4,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.496274,47.533824,East-Caucasian,chechurofielddata,Rutul,Khlyut,Speaker,69,Lezgic
+Khlyut5,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.496274,47.533824,East-Caucasian,chechurofielddata,Rutul,Khlyut,Speaker,70,Lezgic
+Kiche1,Rutul,rutu1240,Rutul,rut,Eurasia,41.53146,47.48171,East-Caucasian,chechurofielddata,Rutul,Kiche,Speaker,81,Lezgic
+Kiche2,Rutul,rutu1240,Rutul,rut,Eurasia,41.53146,47.48171,East-Caucasian,chechurofielddata,Rutul,Kiche,Speaker,82,Lezgic
+Kidero1,Tsez,dido1241,Tsez,ddo,Eurasia,42.1931,45.9583,East-Caucasian,chechurofielddata,Tsunta,Kidero,Speaker,83,Tsezic
+Kidero2,Tsez,dido1241,Tsez,ddo,Eurasia,42.1931,45.9583,East-Caucasian,chechurofielddata,Tsunta,Kidero,Speaker,84,Tsezic
+Kidero3,Tsez,dido1241,Tsez,ddo,Eurasia,42.1931,45.9583,East-Caucasian,chechurofielddata,Tsunta,Kidero,Speaker,85,Tsezic
+Meshabash1,Georgian,nucl1302,Georgian,kat,Eurasia,41.408889,46.874444,Kartvelian,chechurofielddata,Qax,Meshabash,Speaker,96,Kartvelian
+Mikik1,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.63753,47.16822,East-Caucasian,chechurofielddata,Rutul,Mikik,Speaker,98,Lezgic
+Mikik2,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.63753,47.16822,East-Caucasian,chechurofielddata,Rutul,Mikik,Speaker,99,Lezgic
+Qax2,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,41.41944,46.91806,Altaic,chechurofielddata,Qax,Qax,Speaker,101,Turkic
+Qax3,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,41.41944,46.91806,Altaic,chechurofielddata,Qax,Qax,Speaker,102,Turkic
+Qax4,Georgian,nucl1302,Georgian,kat,Eurasia,41.41944,46.91806,Kartvelian,chechurofielddata,Qax,Qax,Speaker,103,Kartvelian
+Qax5,Georgian,nucl1302,Georgian,kat,Eurasia,41.41944,46.91806,Kartvelian,chechurofielddata,Qax,Qax,Speaker,104,Kartvelian
+Qax6,Georgian,nucl1302,Georgian,kat,Eurasia,41.41944,46.91806,Kartvelian,chechurofielddata,Qax,Qax,Speaker,105,Kartvelian
+Qax7,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,41.41944,46.91806,Altaic,chechurofielddata,Qax,Qax,Speaker,106,Turkic
+Qax9,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,41.41944,46.91806,Altaic,chechurofielddata,Qax,Qax,Speaker,108,Turkic
+Rikvani1,Andi,andi1255,Andi,ani,Eurasia,42.782304,46.319372,East-Caucasian,chechurofielddata,Botlikh,Rikvani,Speaker,111,Andic
+Rutul1,Rutul,rutu1240,Rutul,rut,Eurasia,41.5342,47.4269,East-Caucasian,chechurofielddata,Rutul,Rutul,Speaker,112,Lezgic
+Tad-Magitl1,Akhvakh,akhv1239,Akhvakh,akv,Eurasia,42.550266,46.348953,East-Caucasian,chechurofielddata,Akhvakh,Tad-Magitl,Speaker,113,Andic
+Tad-Magitl2,Akhvakh,akhv1239,Akhvakh,akv,Eurasia,42.550266,46.348953,East-Caucasian,chechurofielddata,Akhvakh,Tad-Magitl,Speaker,114,Andic
+Tukita1,Karata,toki1238,Tokita,,Eurasia,42.57056,46.37278,East-Caucasian,chechurofielddata,Akhvakh,Tukita,Speaker,126,Andic
+Yersi1,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.018844,48.012897,Altaic,chechurofielddata,Tabasaran,Yersi,Speaker,133,Turkic
+Yersi2,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.018844,48.012897,Altaic,chechurofielddata,Tabasaran,Yersi,Speaker,134,Turkic
+Yersi3,Azerbaijani,nort2697,North Azerbaijani,azj,Eurasia,42.018844,48.012897,Altaic,chechurofielddata,Tabasaran,Yersi,Speaker,135,Turkic
+Zilo1,Andi,andi1255,Andi,ani,Eurasia,42.731394,46.319223,East-Caucasian,chechurofielddata,Botlikh,Zilo,Speaker,137,Andic
+Zilo2,Andi,andi1255,Andi,ani,Eurasia,42.731394,46.319223,East-Caucasian,chechurofielddata,Botlikh,Zilo,Speaker,138,Andic
+D_Archi,Archi,arch1244,Archi,aqc,Eurasia,42.0664,46.8678,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,140,Lezgic
+D_Bezhta2,Bezhta,bezh1248,Bezhta,kap,Eurasia,42.1206,46.03319,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,141,Tsezic
+Tlibisho1,Bagvalal,bagv1239,Bagvalal,kva,Eurasia,42.333,46.1804,East-Caucasian,chechurofielddata,Akhvakh,Tlibisho,Speaker,142,Andic
+Tlibisho2,Bagvalal,bagv1240,Bagvalal-Tindi,,,42.333,46.1804,East-Caucasian,chechurofielddata,Akhvakh,Tlibisho,Speaker,143,Andic
+Tlibisho3,Bagvalal,bagv1241,,,,42.333,46.1804,East-Caucasian,chechurofielddata,Akhvakh,Tlibisho,Speaker,144,Andic
+Tlibisho4,Bagvalal,bagv1242,,,,42.333,46.1804,East-Caucasian,chechurofielddata,Akhvakh,Tlibisho,Speaker,145,Andic
+D_Bagvalal,Bagvalal,bagv1242,,,,42.333,46.1804,East-Caucasian,chechurofielddata,Dictionary,Dictionary,Dictionary,146,Andic
+E_Georgian,Georgian,nucl1302,Georgian,kat,Eurasia,41.81574,44.31883,Kartvelian,tandashvilipc,Expert,Expert,Expert,148,Kartvelian
+E_Arabic,Arabic,egyp1253,Egyptian Arabic,arz,Africa,31,31,Afro-Asiatic,bulakhpc,Expert,Expert,Expert,149,Semitic
+E_Avar,Avar,avar1256,Avar,ava,Eurasia,42.43056,46.66639,East-Caucasian,khapizovpc,Expert,Expert,Expert,150,Avar
+E_Chechen,Chechen,chec1245,Chechen,che,Eurasia,43.5,45.5,East-Caucasian,molochievapc,Expert,Expert,Expert,151,Nakh
+E_Kumyk,Kumyk,kumy1244,Kumyk,kum,Eurasia,43,47,Altaic,gadzhiakhmedovpc,Expert,Expert,Expert,152,Turkic
+E_Persian,Persian,west2369,Western Farsi,pes,Eurasia,28.65928,55.15861,Indo-European,armandpc,Expert,Expert,Expert,153,Iranian
+Anchikh1,Karata,anch1238,Anchix,,Eurasia,42.610709,46.277436,East-Caucasian,chechurofielddata,Akhvakh,Anchikh,Speaker,154,Andic
+Anchikh2,Karata,anch1238,Anchix,,Eurasia,42.610709,46.277436,East-Caucasian,chechurofielddata,Akhvakh,Anchikh,Speaker,155,Andic
+Kvankhidatli1,Andi,andi1255,Andi,ani,Eurasia,42.656995,46.272891,East-Caucasian,chechurofielddata,Botlikh,Kvankhidatli,Speaker,156,Andic
+Tukita2,Karata,toki1238,Tokita,,Eurasia,42.57056,46.37278,East-Caucasian,chechurofielddata,Akhvakh,Tukita,Speaker,157,Andic
+Tukita3,Karata,toki1238,Tokita,,Eurasia,42.57056,46.37278,East-Caucasian,chechurofielddata,Akhvakh,Tukita,Speaker,158,Andic
+Tukita4,Karata,toki1238,Tokita,,Eurasia,42.57056,46.37278,East-Caucasian,chechurofielddata,Akhvakh,Tukita,Speaker,159,Andic
+Tukita5,Karata,toki1238,Tokita,,Eurasia,42.57056,46.37278,East-Caucasian,chechurofielddata,Akhvakh,Tukita,Speaker,160,Andic
+Bezhta2,Bezhta,bezh1248,Bezhta,kap,Eurasia,42.1339,46.1247,East-Caucasian,chechurofielddata,Tsunta,Bezhta,Speaker,161,Tsezic
+Kurdul1,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.581482,47.17811,East-Caucasian,chechurofielddata,Rutul,Kurdul,Speaker,162,Lezgic
+Kurdul2,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.581482,47.17811,East-Caucasian,chechurofielddata,Rutul,Kurdul,Speaker,163,Lezgic
+Kurdul3,Tsakhur,tsak1249,Tsakhur,tkr,Eurasia,41.581482,47.17811,East-Caucasian,chechurofielddata,Rutul,Kurdul,Speaker,164,Lezgic
+Fiy1,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.285241,47.565016,East-Caucasian,chechurofielddata,Akhty,Fiy,Speaker,165,Lezgic
+Fiy2,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.285241,47.565016,East-Caucasian,chechurofielddata,Akhty,Fiy,Speaker,166,Lezgic
+Gdym1,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.310094,47.468052,East-Caucasian,chechurofielddata,Akhty,Gdym,Speaker,167,Lezgic
+Gdym2,Lezgian,lezg1247,Lezgian,lez,Eurasia,41.310094,47.468052,East-Caucasian,chechurofielddata,Akhty,Gdym,Speaker,168,Lezgic
+Khnov1,Rutul,rutu1240,Rutul,rut,Eurasia,41.378933,47.442273,East-Caucasian,chechurofielddata,Akhty,Khnov,Speaker,169,Lezgic
+Khnov2,Rutul,rutu1240,Rutul,rut,Eurasia,41.378933,47.442273,East-Caucasian,chechurofielddata,Akhty,Khnov,Speaker,170,Lezgic
+Khnov3,Rutul,rutu1240,Rutul,rut,Eurasia,41.378933,47.442273,East-Caucasian,chechurofielddata,Akhty,Khnov,Speaker,171,Lezgic
+Kina4,Rutul,rutu1240,Rutul,rut,Eurasia,41.6166,47.2647,East-Caucasian,chechurofielddata,Rutul,Kina,Speaker,172,Lezgic
+Kina5,Rutul,rutu1240,Rutul,rut,Eurasia,41.6166,47.2647,East-Caucasian,chechurofielddata,Rutul,Kina,Speaker,173,Lezgic
+Kina3a,Rutul,rutu1240,Rutul,rut,Eurasia,41.6166,47.2647,East-Caucasian,chechurofielddata,Rutul,Kina,Speaker,174,Lezgic
+Kina2a,Rutul,rutu1240,Rutul,rut,Eurasia,41.6166,47.2647,East-Caucasian,chechurofielddata,Rutul,Kina,Speaker,175,Lezgic
+Kina1a,Rutul,rutu1240,Rutul,rut,Eurasia,41.6166,47.2647,East-Caucasian,chechurofielddata,Rutul,Kina,Speaker,176,Lezgic
