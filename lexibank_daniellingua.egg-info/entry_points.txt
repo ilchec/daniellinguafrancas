@@ -1,6 +1,0 @@
-[cldfbench.commands]
-daniellinguafrancas = commands
-
-[lexibank.dataset]
-daniellinguafrancas = lexibank_daniellinguafrancas:Dataset
-
