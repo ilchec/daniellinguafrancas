@@ -1,4 +1,4 @@
-# CLDF dataset accompanying Daniel et al. "Lingua Franca as Lexical Donors: Evidence from Daghestan" from 2021
+# CLDF dataset accompanying Daniel et al.'s "Lingua Franca as Lexical Donors: Evidence from Daghestan" from 2021
 
 Cite the source dataset as
 
