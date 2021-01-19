@@ -7,14 +7,14 @@
     "dc:license": "https://creativecommons.org/licenses/by/4.0/",
     "dc:related": null,
     "dc:source": "sources.bib",
-    "dc:title": "CLDF dataset accompanying Daniel et al. \"Lingua Franca as Lexical Donors: Evidence from Daghestan\" from 2021",
+    "dc:title": "CLDF dataset accompanying Daniel et al.'s \"Lingua Franca as Lexical Donors: Evidence from Daghestan\" from 2021",
     "dcat:accessURL": "git@github.com:ilchec/daniellinguafrancas",
     "prov:wasDerivedFrom": [
         {
             "rdf:type": "prov:Entity",
             "dc:title": "Repository",
             "rdf:about": "git@github.com:ilchec/daniellinguafrancas",
-            "dc:created": "ceb55e4"
+            "dc:created": "428a3d0"
         },
         {
             "rdf:type": "prov:Entity",
