@@ -7,7 +7,7 @@ with open("metadata.json", encoding="utf-8") as fp:
 
 
 setup(
-    name='lexibank_daniellingua',
+    name='lexibank_daniellinguafrancas',
     version="1.0",
     description=metadata['title'],
     license=metadata.get('license', ''),
