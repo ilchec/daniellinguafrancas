@@ -37,12 +37,13 @@ class Dataset(BaseDataset):
     language_class = CustomLanguage
 
     # define the way in which forms should be handled
-    #form_spec = FormSpec(
-    #    brackets={"(": ")", "[": "]"},
-    #    separators=";/,",
-    #    missing_data=("?", "-"),
-    #    strip_inside_brackets=True,
-    #)
+    form_spec = FormSpec(
+        brackets={"(": ")", "[": "]"},
+        separators=";/,",
+        missing_data=("?", "-"),
+        strip_inside_brackets=True,
+        first_form_only=True
+    )
 
     def cmd_makecldf(self, args):
         """
@@ -66,15 +67,14 @@ class Dataset(BaseDataset):
             concepts[concept['NUMBER']] = idx
 
         for row in progressbar(data, desc="cldfify"):
-            lexeme = args.writer.add_form(
+            lexemes = args.writer.add_forms_from_value(
                     Language_ID=languages[row['Code']],
                     Parameter_ID=concepts[row['Concept nr.']],
                     Value=row['Standard Transcription'],
-                    Form=row['Standard Transcription'],
                     Source=row['Source']
                     )
             args.writer.add_cognate(
-                    lexeme=lexeme,
+                    lexeme=lexemes[0],
                     Cognateset_ID=row['Set'].replace(' ', ''),
                     Cognate_Detection_Method='expert',
                     Source=row['Source']
