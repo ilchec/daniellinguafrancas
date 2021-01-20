@@ -19,13 +19,9 @@ setup(
         'lexibank.dataset': [
             'daniellinguafrancas=lexibank_daniellinguafrancas:Dataset',
         ],
-        'cldfbench.commands': [
-            'daniellinguafrancas=commands',
-        ]
     },
     install_requires=[
         'pylexibank>=1.1.1',
-        'beautifulsoup4>=4.7.1',
     ],
     extras_require={
         'test': [

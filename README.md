@@ -6,6 +6,25 @@ Cite the source dataset as
 
 This dataset is licensed under a CC-BY-4.0 license
 
+## Notes
+
+This is the dataset accompanying the publication by Gerardi and Reichert, titled "The Tupí-Guaraní Language Family:A Phylogenetic Classification", which will appear in Diachronica. 
+
+When converting the original data to CLDF, we found some problems in the mapping of concept labels in the lexical data file (called `Aligned_matrix_lexical.csv`, in the folder `raw`) and the cognate assignments (called `Cognate matrix.csv` also in `raw`). We have marked these cases by adding error codes which are triggered when running the CLDFBench command, and currently, there are five items which either do not have a counterpart in the lexical data file or in the cognate file.
+
+```
+$ cldfbench lexibank.makecldf gerarditupi
+WARNING Concept CAIR could not be found
+WARNING Concept LAY missing
+WARNING Concept FALL missing
+WARNING Concept HEAT_UP/WARM_UP missing
+WARNING Concept CHEST missing
+```
+
+We could not resolve these cases and will leave them for now, but we will update the data later, when we manage to find out what happened. The results of the analyses, however, should not have been influenced by these mismatches.
+
+
+
 ## Statistics
 
 
@@ -15,8 +34,40 @@ This dataset is licensed under a CC-BY-4.0 license
 
 - **Varieties:** 96
 - **Concepts:** 160
-- **Lexemes:** 16,048
+- **Lexemes:** 16,096
 - **Sources:** 4
 - **Synonymy:** 1.11
 - **Cognacy:** 16,048 cognates in 2,679 cognate sets (1,284 singletons)
 - **Cognate Diversity:** 0.16
+
+# Contributors
+
+Name | GitHub user | Description | Role
+--- | --- | --- | ---
+Ilia Chechuro | @ilchec | maintainer | Author
+Michael Daniel | | original data | Author
+Samira Verhees | @sverhees | original data | Author
+Nina Dobrushina | | conception | Author
+Arseniy Averin | | original data | DataCollector
+Faina Daniel | | original data | DataCollector
+Lilia Terekhina | | original data | DataCollector
+Zarina Kerimova | | original data | DataCollector
+Elena Armand | | original data | DataCollector
+Maria Bulakh | | original data | DataCollector
+Tagir Gadzhiakhmedov | | original data | DataCollector
+Shakhban Khapizov | | original data | DataCollector
+Gadir Mamedov | | original data | DataCollector
+Nestan Magalashvili | | original data | DataCollector
+Ramazan Mazhidov | | original data | DataCollector
+Zarina Molochieva | | original data | DataCollector
+Murad Suleymanov | | original data | DataCollector
+Manana Tandaschvili | | original data | DataCollector
+Evgenia Egorova | | original data | Other
+Violetta Ivanova | | original data | Other
+Aleksandra Martynova  | | original data | Other
+Anastasia Safonova  | | original data | Other
+Anna Vishenkova | | original data | Other
+Anastasia Chasovskikh  | | original data | Other
+Zarina Kerimova | | original data | Other
+
+
