@@ -18,6 +18,7 @@ The data accompanying the project are presented in the CLDF format.
 ## Statistics
 
 
+[![CLDF validation](https://github.com/lexibank/daniellinguafrancas/workflows/CLDF-validation/badge.svg)](https://github.com/lexibank/daniellinguafrancas/actions?query=workflow%3ACLDF-validation)
 ![Glottolog: 100%](https://img.shields.io/badge/Glottolog-100%25-brightgreen.svg "Glottolog: 100%")
 ![Concepticon: 98%](https://img.shields.io/badge/Concepticon-98%25-green.svg "Concepticon: 98%")
 ![Source: 100%](https://img.shields.io/badge/Source-100%25-brightgreen.svg "Source: 100%")
