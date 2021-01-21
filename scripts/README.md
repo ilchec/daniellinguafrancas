@@ -31,7 +31,7 @@ Software:
 
 - R (version 3.6.3) and R Studio
 
-*Note that the code will not run in R 4.0 due to the changed behaviour of some important functions as well as compatibility issues*
+*Note that the code will not run in R 4.0 due to the changed behaviour of some important functions as well as compatibility issues.*
 
 R packages:
 
