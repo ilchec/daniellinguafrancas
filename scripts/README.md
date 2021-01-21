@@ -34,17 +34,27 @@ Software:
 *Note that the code will not run in R 4.0 due to the changed behaviour of some important functions as well as compatibility issues.*
 
 R packages:
-
-- tidyverse
-- ggplot2
-- ggrepel
-- dplyr
-- ggpubr
-- DT
-- scales
-- data.table
-- arm
-- sjPlot
+ - gdtools 0.2.2     
+ - ggpattern 0.1.3   
+ - rcompanion 2.3.26
+ - rstatix 0.6.0     
+ - arm 1.11-2       
+ - MASS 7.3-51.5    
+ - sjPlot 2.8.6      
+ - ggpubr 0.4.0      
+ - ggrepel 0.8.2     
+ - forcats 0.5.0    
+ - stringr 1.4.0     
+ - dplyr 1.0.2       
+ - purrr 0.3.4       
+ - readr 1.4.0       
+ - tidyr 1.1.2      
+ - tibble 3.0.4     
+ - ggplot2 3.3.2     
+ - tidyverse 1.3.0   
+ - lme 1.0-4        
+ - lme4 1.1-26      
+ - Matrix 1.2-18
 
 The R Software and R Studio can be downloaded here: https://rstudio.com/products/rstudio/download/
 
