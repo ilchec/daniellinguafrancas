@@ -42,4 +42,3 @@ tqdm==4.56.0
 uritemplate==3.0.1
 urllib3==1.26.2
 xlrd==2.0.1
-zipp==3.4.0
