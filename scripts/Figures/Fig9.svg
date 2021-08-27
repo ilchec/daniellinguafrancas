@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 1440.00 720.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, polygon, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHwzNjAuMDB8NzIwLjAwfDAuMDA='>
+    <rect x='0.00' y='0.00' width='360.00' height='720.00' />
+  </clipPath>
+</defs>
+<rect x='0.00' y='0.00' width='360.00' height='720.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' clip-path='url(#cpMC4wMHwzNjAuMDB8NzIwLjAwfDAuMDA=)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<defs>
+  <clipPath id='cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ=='>
+    <rect x='56.27' y='24.99' width='298.25' height='653.13' />
+  </clipPath>
+</defs>
+<rect x='56.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,549.48 354.52,549.48 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,351.56 354.52,351.56 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,153.64 354.52,153.64 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='140.84,678.12 140.84,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='269.95,678.12 269.95,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,648.44 354.52,648.44 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,450.52 354.52,450.52 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,252.60 354.52,252.60 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='56.27,54.68 354.52,54.68 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='76.28,678.12 76.28,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='205.40,678.12 205.40,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='334.51,678.12 334.51,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<circle cx='76.28' cy='641.73' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<circle cx='205.40' cy='641.87' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<circle cx='334.51' cy='379.26' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='69.83,630.84 82.74,630.84 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='76.28,630.84 76.28,645.89 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='69.83,645.89 82.74,645.89 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='198.94,616.25 211.85,616.25 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='205.40,616.25 205.40,647.11 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='198.94,647.11 211.85,647.11 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='328.05,137.66 340.96,137.66 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='334.51,137.66 334.51,516.82 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='328.05,516.82 340.96,516.82 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<rect x='56.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: #333333;' clip-path='url(#cpNTYuMjd8MzU0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='31.69' y='653.30' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>0%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='24.13' y='455.38' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>10%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='24.13' y='257.47' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>20%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='24.13' y='59.55' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>30%</text></g>
+<polyline points='53.53,648.44 56.27,648.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='53.53,450.52 56.27,450.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='53.53,252.60 56.27,252.60 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='53.53,54.68 56.27,54.68 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='76.28,680.86 76.28,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='205.40,680.86 205.40,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='334.51,680.86 334.51,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='46.81' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='58.94px' lengthAdjust='spacingAndGlyphs'>Northeast</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='174.80' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='61.19px' lengthAdjust='spacingAndGlyphs'>Northwest</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='316.75' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='35.52px' lengthAdjust='spacingAndGlyphs'>South</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='56.27' y='16.21' style='font-size: 15.00px; font-weight: bold; font-family: Arial;' textLength='45.01px' lengthAdjust='spacingAndGlyphs'>Turkic</text></g>
+<defs>
+  <clipPath id='cpMzYwLjAwfDcyMC4wMHw3MjAuMDB8MC4wMA=='>
+    <rect x='360.00' y='0.00' width='360.00' height='720.00' />
+  </clipPath>
+</defs>
+<rect x='360.00' y='0.00' width='360.00' height='720.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' clip-path='url(#cpMzYwLjAwfDcyMC4wMHw3MjAuMDB8MC4wMA==)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<defs>
+  <clipPath id='cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk='>
+    <rect x='416.27' y='24.99' width='298.25' height='653.13' />
+  </clipPath>
+</defs>
+<rect x='416.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,549.48 714.52,549.48 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,351.56 714.52,351.56 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,153.64 714.52,153.64 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='500.84,678.12 500.84,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='629.95,678.12 629.95,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,648.44 714.52,648.44 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,450.52 714.52,450.52 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,252.60 714.52,252.60 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='416.27,54.68 714.52,54.68 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='436.28,678.12 436.28,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='565.40,678.12 565.40,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='694.51,678.12 694.51,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<circle cx='436.28' cy='350.30' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<circle cx='565.40' cy='386.33' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<circle cx='694.51' cy='624.83' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='429.83,283.29 442.74,283.29 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='436.28,283.29 436.28,406.85 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='429.83,406.85 442.74,406.85 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='558.94,284.52 571.85,284.52 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='565.40,284.52 565.40,462.93 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='558.94,462.93 571.85,462.93 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='688.05,615.38 700.96,615.38 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='694.51,615.38 694.51,631.60 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<polyline points='688.05,631.60 700.96,631.60 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<rect x='416.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: #333333;' clip-path='url(#cpNDE2LjI3fDcxNC41Mnw2NzguMTJ8MjQuOTk=)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='391.69' y='653.30' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>0%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='384.13' y='455.38' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>10%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='384.13' y='257.47' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>20%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='384.13' y='59.55' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>30%</text></g>
+<polyline points='413.53,648.44 416.27,648.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='413.53,450.52 416.27,450.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='413.53,252.60 416.27,252.60 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='413.53,54.68 416.27,54.68 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='436.28,680.86 436.28,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='565.40,680.86 565.40,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='694.51,680.86 694.51,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='406.81' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='58.94px' lengthAdjust='spacingAndGlyphs'>Northeast</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='534.80' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='61.19px' lengthAdjust='spacingAndGlyphs'>Northwest</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='676.75' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='35.52px' lengthAdjust='spacingAndGlyphs'>South</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='416.27' y='16.21' style='font-size: 15.00px; font-weight: bold; font-family: Arial;' textLength='33.35px' lengthAdjust='spacingAndGlyphs'>Avar</text></g>
+<defs>
+  <clipPath id='cpNzIwLjAwfDEwODAuMDB8NzIwLjAwfDAuMDA='>
+    <rect x='720.00' y='0.00' width='360.00' height='720.00' />
+  </clipPath>
+</defs>
+<rect x='720.00' y='0.00' width='360.00' height='720.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' clip-path='url(#cpNzIwLjAwfDEwODAuMDB8NzIwLjAwfDAuMDA=)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<defs>
+  <clipPath id='cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5'>
+    <rect x='776.27' y='24.99' width='298.25' height='653.13' />
+  </clipPath>
+</defs>
+<rect x='776.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,549.48 1074.52,549.48 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,351.56 1074.52,351.56 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,153.64 1074.52,153.64 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='860.84,678.12 860.84,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='989.95,678.12 989.95,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,648.44 1074.52,648.44 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,450.52 1074.52,450.52 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,252.60 1074.52,252.60 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='776.27,54.68 1074.52,54.68 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='796.28,678.12 796.28,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='925.40,678.12 925.40,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='1054.51,678.12 1054.51,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<circle cx='796.28' cy='647.41' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<circle cx='925.40' cy='544.52' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<circle cx='1054.51' cy='636.77' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='789.83,642.76 802.74,642.76 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='796.28,642.76 796.28,648.25 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='789.83,648.25 802.74,648.25 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='918.94,309.51 931.85,309.51 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='925.40,309.51 925.40,619.45 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='918.94,619.45 931.85,619.45 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='1048.05,617.19 1060.96,617.19 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='1054.51,617.19 1054.51,644.11 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<polyline points='1048.05,644.11 1060.96,644.11 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<rect x='776.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: #333333;' clip-path='url(#cpNzc2LjI3fDEwNzQuNTJ8Njc4LjEyfDI0Ljk5)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='751.69' y='653.30' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>0%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='744.13' y='455.38' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>10%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='744.13' y='257.47' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>20%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='744.13' y='59.55' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>30%</text></g>
+<polyline points='773.53,648.44 776.27,648.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='773.53,450.52 776.27,450.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='773.53,252.60 776.27,252.60 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='773.53,54.68 776.27,54.68 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='796.28,680.86 796.28,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='925.40,680.86 925.40,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1054.51,680.86 1054.51,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='766.81' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='58.94px' lengthAdjust='spacingAndGlyphs'>Northeast</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='894.80' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='61.19px' lengthAdjust='spacingAndGlyphs'>Northwest</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1036.75' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='35.52px' lengthAdjust='spacingAndGlyphs'>South</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='776.27' y='16.21' style='font-size: 15.00px; font-weight: bold; font-family: Arial;' textLength='65.84px' lengthAdjust='spacingAndGlyphs'>Georgian</text></g>
+<defs>
+  <clipPath id='cpMTA4MC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='1080.00' y='0.00' width='360.00' height='720.00' />
+  </clipPath>
+</defs>
+<rect x='1080.00' y='0.00' width='360.00' height='720.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' clip-path='url(#cpMTA4MC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<defs>
+  <clipPath id='cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ=='>
+    <rect x='1136.27' y='24.99' width='298.25' height='653.13' />
+  </clipPath>
+</defs>
+<rect x='1136.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,549.48 1434.52,549.48 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,351.56 1434.52,351.56 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,153.64 1434.52,153.64 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1220.84,678.12 1220.84,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1349.95,678.12 1349.95,24.99 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,648.44 1434.52,648.44 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,450.52 1434.52,450.52 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,252.60 1434.52,252.60 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1136.27,54.68 1434.52,54.68 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1156.28,678.12 1156.28,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1285.40,678.12 1285.40,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1414.51,678.12 1414.51,24.99 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<circle cx='1156.28' cy='646.29' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<circle cx='1285.40' cy='645.73' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<circle cx='1414.51' cy='644.09' r='3.02' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1149.83,618.00 1162.74,618.00 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1156.28,618.00 1156.28,648.29 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1149.83,648.29 1162.74,648.29 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1278.94,552.30 1291.85,552.30 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1285.40,552.30 1285.40,648.36 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1278.94,648.36 1291.85,648.36 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1408.05,591.19 1420.96,591.19 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1414.51,591.19 1414.51,648.11 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<polyline points='1408.05,648.11 1420.96,648.11 ' style='stroke-width: 1.49; stroke-linecap: butt;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<rect x='1136.27' y='24.99' width='298.25' height='653.13' style='stroke-width: 1.07; stroke: #333333;' clip-path='url(#cpMTEzNi4yN3wxNDM0LjUyfDY3OC4xMnwyNC45OQ==)' />
+<defs>
+  <clipPath id='cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw'>
+    <rect x='0.00' y='0.00' width='1440.00' height='720.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1111.69' y='653.30' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='19.65px' lengthAdjust='spacingAndGlyphs'>0%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1104.13' y='455.38' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>10%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1104.13' y='257.47' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>20%</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1104.13' y='59.55' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='27.21px' lengthAdjust='spacingAndGlyphs'>30%</text></g>
+<polyline points='1133.53,648.44 1136.27,648.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1133.53,450.52 1136.27,450.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1133.53,252.60 1136.27,252.60 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1133.53,54.68 1136.27,54.68 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1156.28,680.86 1156.28,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1285.40,680.86 1285.40,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<polyline points='1414.51,680.86 1414.51,678.12 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)' />
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1126.81' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='58.94px' lengthAdjust='spacingAndGlyphs'>Northeast</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1254.80' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='61.19px' lengthAdjust='spacingAndGlyphs'>Northwest</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1396.75' y='692.79' style='font-size: 13.60px; fill: #4D4D4D; font-family: Arial;' textLength='35.52px' lengthAdjust='spacingAndGlyphs'>South</text></g>
+<g clip-path='url(#cpMC4wMHwxNDQwLjAwfDcyMC4wMHwwLjAw)'><text x='1136.27' y='16.21' style='font-size: 15.00px; font-weight: bold; font-family: Arial;' textLength='63.35px' lengthAdjust='spacingAndGlyphs'>Chechen</text></g>
+</svg>

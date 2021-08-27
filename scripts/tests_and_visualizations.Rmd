@@ -11,7 +11,7 @@ output:
 
 This page is organized as follows. 
 
-In Part 1, we create the multilingualism plots based on Multidagestan data (Dobrushina et al. 2017). In Part 2, we use the loanword data and calculate the numbers of sharings between the East-Caucasian wordlists and donor languages. We use regression analysis and a series of t-tests to test our claims for statistical significance. Part 3 runs permutation tests. To conduct the permutation tests, create a new sample of wordlists based on our data but with pan-Daghestanian probabilities of attesting particular lexemes in the lists and test our real data against this gainst this sample. The premutation block consists of two parts: Avar and Azerbaijani influence vs. Chechen and Georgian influence, the two parts are more or less the same, apart from the data sampling, this is why the second part is commented in less detail.
+In Part 1, we create the multilingualism plots based on Multidagestan data (Dobrushina et al. 2017). In Part 2, we use the loanword data and calculate the numbers of sharings between the East Caucasian wordlists and donor languages. We use regression analysis and a series of t-tests to test our claims for statistical significance. Part 3 runs permutation tests. To conduct the permutation tests, create a new sample of wordlists based on our data but with pan-Daghestanian probabilities of attesting particular lexemes in the lists and test our real data against this gainst this sample. The premutation block consists of two parts: Avar and Azerbaijani influence vs. Chechen and Georgian influence, the two parts are more or less the same, apart from the data sampling, this is why the second part is commented in less detail.
 
 The plots in this supplement appear in the order they are created, which differs from the order in the paper. This decision was made to increase the readability of the code. For convenience, the figures here are provided with their numbers in the paper.
 
@@ -226,7 +226,7 @@ colnames(List_sizes)[5] <- "List_Size"
 ```{r message = FALSE, error = FALSE, warning = FALSE, echo = FALSE, fig.width=20,fig.height=10}
 ### 2.3. Subsetting the similarity sets corresponding to loanwords
 
-#Here we subset the Turkic, Avar, Georgian and Chechen similarity sets so that we can compare East-Caucasian wordlists to them.
+#Here we subset the Turkic, Avar, Georgian and Chechen similarity sets so that we can compare East Caucasian wordlists to them.
 
 #The loanwords are counted as follows. 
 
@@ -263,7 +263,7 @@ Chechen <- Chechen_clean
 
 ### 2.4. Subsetting the data
 
-#This code chunk only leaves the relevant sets (i.e. the ones corresponding to loanwords) in the East-Caucasian data set.
+#This code chunk only leaves the relevant sets (i.e. the ones corresponding to loanwords) in the East Caucasian data set.
 
 Turkic_loans <- as.data.frame(words_meta[words_meta$Set %in% Turkic$Set,])
 Avar_loans <- as.data.frame(words_meta[words_meta$Set %in% Avar$Set,])
@@ -787,6 +787,7 @@ t_mediation_complete_wide <- spread(t_mediation_complete[,-c(3,4,6,7)], Mediatio
 
 t_mediation_complete_wide %>% 
   ggplot(aes(x = Donor2*100, y = LF*100, label = Village)) +
+  geom_point()+
   geom_text_repel(size = 10, position = position_jitter(width = 0.1, height = 0.01), show.legend = TRUE, color = "black", aplha = 0.9) +
   labs(title = "", x = "Shared with Donor 2\n(Akhty dialect of Lezgian in the South,\nGeorgian in the Northwest, Chechen in the Northeast)", y = "Shared with Donor 1\n(Standard Lezgian in the South, Avar in the North)")+
   scale_colour_grey()+

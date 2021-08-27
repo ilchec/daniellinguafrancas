@@ -1,0 +1,11 @@
+README.md
+lexibank_daniellinguafrancas.py
+setup.cfg
+setup.py
+lexibank_daniellinguafrancas.egg-info/PKG-INFO
+lexibank_daniellinguafrancas.egg-info/SOURCES.txt
+lexibank_daniellinguafrancas.egg-info/dependency_links.txt
+lexibank_daniellinguafrancas.egg-info/entry_points.txt
+lexibank_daniellinguafrancas.egg-info/not-zip-safe
+lexibank_daniellinguafrancas.egg-info/requires.txt
+lexibank_daniellinguafrancas.egg-info/top_level.txt
